@@ -2,7 +2,8 @@
 
 ## Getting Started
 After cloning, run `flutter pub get` on the root folder of the project
--> this will install the necessary dependencies and packages
+-> this will install the necessary dependencies and packages that you need 
+in order to run the application.
 
 ## Flutter Useful Links
 
