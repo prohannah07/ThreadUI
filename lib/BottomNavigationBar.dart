@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+
 import './colorPallete/ThreadColorPallete.dart';
+import './tabs/homeTab/HomeTab.dart';
+import './tabs/searchTab/SearchTab.dart';
+import './tabs/settingsTab/SettingsTab.dart';
 
 class ThreadBottomNavigationBar extends StatefulWidget{
   ThreadBottomNavigationBar({Key key}) : super(key: key);
@@ -14,19 +18,10 @@ class _ThreadBottomNavigationBarState extends State<ThreadBottomNavigationBar>{
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home Tab',
-      style: optionStyle,
-    ),
-    Text(
-      'Search Tab',
-      style: optionStyle,
-    ),
-    Text(
-      'Settings Tab',
-      style: optionStyle,
-    ),
+  List<Widget> _widgetOptions = <Widget>[
+    HomeTab(),
+    SearchTab(),
+    SettingsTab(),
   ];
 
   void _onItemTapped(int index) {
