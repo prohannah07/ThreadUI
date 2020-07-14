@@ -5,8 +5,6 @@ import './tabs/homeTab/HomeTab.dart';
 import './tabs/searchTab/SearchTab.dart';
 import './tabs/settingsTab/SettingsTab.dart';
 
-// This is a new change!!!
-
 class ThreadBottomNavigationBar extends StatefulWidget{
   ThreadBottomNavigationBar({Key key}) : super(key: key);
 

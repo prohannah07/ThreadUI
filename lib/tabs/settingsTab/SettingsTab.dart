@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../.././colorPallete/ThreadColorPallete.dart';
+import 'ManageAccounts.dart';
+import 'PrivacyAndSecurity.dart';
+import 'TermsAndServices.dart';
+import 'AboutPage.dart';
 
 class SettingsTab extends StatelessWidget {
   @override
@@ -31,9 +35,7 @@ class SettingsTab extends StatelessWidget {
                     leading: Icon(Icons.account_circle),
                     title: Text("Manage My Accounts"),
                     trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      // Open existing accounts
-                    },
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageAccounts())),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5.0,),
@@ -45,9 +47,7 @@ class SettingsTab extends StatelessWidget {
                     leading: Icon(Icons.lock),
                     title: Text("Privacy and Security"),
                     trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      // Open Privacy and Security Info
-                    },
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyAndSecurity())),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5.0,),
@@ -59,9 +59,7 @@ class SettingsTab extends StatelessWidget {
                     leading: Icon(Icons.assignment),
                     title: Text("Terms and Services"),
                     trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      // Open Terms and Services
-                    },
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TermsAndServices())),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5.0,),
@@ -73,9 +71,7 @@ class SettingsTab extends StatelessWidget {
                     leading: Icon(Icons.info_outline),
                     title: Text("About"),
                     trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: (){
-                      // Open about page
-                    },
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage())),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5.0,),
@@ -92,3 +88,4 @@ class SettingsTab extends StatelessWidget {
     );
   }
 }
+
