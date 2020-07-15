@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../colorPallete/ThreadColorPallete.dart';
 
+import '.././topTabBarPages/TabBarPage.dart';
+
+/*
+Do not have a search bar
+*/
+
 class HomeTabTopNavigationBar extends StatefulWidget {
   @override
   _HomeTabTopNavigationBarState createState() => _HomeTabTopNavigationBarState();
@@ -96,14 +102,10 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
     return TabBarView(
       controller: _tabController,
       children: [
-        Text(_currentIndex.toString()),
-        Text(_currentIndex.toString()),
-        Text(_currentIndex.toString()),
-        Text(_currentIndex.toString()),
-        // Icon(Icons.home),
-        // ImageIcon(AssetImage("assets/socialMediaIcons/twitter.png")),
-        // ImageIcon(AssetImage("assets/socialMediaIcons/facebook.png")),
-        // ImageIcon(AssetImage("assets/socialMediaIcons/instagram.png")),
+        TabBarPage(tabPageName: "All Tab!",),
+        TabBarPage(tabPageName: "Twitter Tab!",),
+        TabBarPage(tabPageName: "Facebook Tab!",),
+        TabBarPage(tabPageName: "Instagram Tab!",),
       ],
     );
   }
