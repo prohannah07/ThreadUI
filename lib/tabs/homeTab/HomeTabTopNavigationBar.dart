@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import './colorPallete/ThreadColorPallete.dart';
+import '../../colorPallete/ThreadColorPallete.dart';
 
-class TabTopNavigationBar extends StatefulWidget {
-
+class HomeTabTopNavigationBar extends StatefulWidget {
   @override
-  _TabTopNavigationBarState createState() => _TabTopNavigationBarState();
+  _HomeTabTopNavigationBarState createState() => _HomeTabTopNavigationBarState();
 }
 
-class _TabTopNavigationBarState extends State<TabTopNavigationBar> with SingleTickerProviderStateMixin {
+class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
   int _currentIndex = 0;
 
@@ -31,21 +31,40 @@ class _TabTopNavigationBarState extends State<TabTopNavigationBar> with SingleTi
     });
   }
 
-  Text _tabTitle(){
-    if (_currentIndex == 0){
-      return Text("ALL");
-    }else if (_currentIndex == 1){
-      return Text("TWITTER");
-    }else if (_currentIndex == 2){
-      return Text("FACEBOOK");
+  Text _tabTitle() {
+    TextStyle smStyle = TextStyle(
+      fontSize: 15.0,
+      fontWeight: FontWeight.bold,
+      color: ThreadColorPalette.red1,
+    );
+
+    if (_currentIndex == 0) {
+      return Text(
+        "ALL",
+        style: smStyle,
+      );
+    } else if (_currentIndex == 1) {
+      return Text(
+        "TWITTER",
+        style: smStyle,
+      );
+    } else if (_currentIndex == 2) {
+      return Text(
+        "FACEBOOK",
+        style: smStyle,
+      );
     }
-    return Text("INSTAGRAM");
+    return Text(
+      "INSTAGRAM",
+      style: smStyle,
+    );
   }
 
   TabBar _getTabs() {
     return TabBar(
       labelColor: ThreadColorPalette.red1,
       indicatorColor: ThreadColorPalette.red1,
+      isScrollable: true,
       tabs: [
         Tab(
           text: "ALL",
@@ -92,21 +111,20 @@ class _TabTopNavigationBarState extends State<TabTopNavigationBar> with SingleTi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(75.0),
-            child: AppBar(
-              elevation: 0.0,
-              backgroundColor: Colors.white,
-              flexibleSpace: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _tabTitle(),
-                  _getTabs(),
-                ]
-              )
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.0),
+          child: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            flexibleSpace: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                _tabTitle(),
+                _getTabs(),
+              ],
             ),
           ),
-          body: _getTabBarView()
-        );
+        ),
+        body: _getTabBarView());
   }
 }

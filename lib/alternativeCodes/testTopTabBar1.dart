@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './colorPallete/ThreadColorPallete.dart';
+import '../colorPallete/ThreadColorPallete.dart';
 
 class TabTopNavigationBar extends StatelessWidget {
 
