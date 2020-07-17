@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\lib",
+    "\\lib\\tabs",
+    "\\lib\\tabs\\homeTab",
+    "\\lib\\tabs\\searchTab",
+    "\\lib\\tabs\\settingsTab"
+  ],
+  "SelectedNode": "\\lib\\tabs\\settingsTab\\ManageAccounts.dart",
+  "PreviewInSolutionExplorer": false
+}

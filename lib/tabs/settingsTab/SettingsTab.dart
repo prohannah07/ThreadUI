@@ -35,7 +35,7 @@ class SettingsTab extends StatelessWidget {
                     leading: Icon(Icons.account_circle),
                     title: Text("Manage My Accounts"),
                     trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageAccounts())),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageAccount())),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5.0,),
