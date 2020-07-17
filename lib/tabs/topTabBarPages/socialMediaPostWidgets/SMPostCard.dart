@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../.././colorPallete/ThreadColorPallete.dart';
 import 'smPostCardUtilityWidgets/SMPostDetails.dart';
-import './smPostCardUtilityWidgets/SMPostImageCarousel.dart';
+import './SMMoreDetailsPage.dart';
 
 class SMPostCard extends StatelessWidget {
   final String imagePath;
@@ -26,8 +26,13 @@ class SMPostCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (BuildContext context) {
           return Scaffold(
-            body: Text(
-              socialMedia,
+            body: SMMoreDetailsPage(
+              imagePath: imagePath,
+              name: name,
+              userName: userName,
+              socialMedia: socialMedia,
+              textPost: textPost,
+              media: media,
             ),
           );
         },
