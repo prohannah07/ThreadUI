@@ -10,22 +10,43 @@ class SMPostCard extends StatelessWidget {
   final String userName;
   final String socialMedia;
   final String textPost;
+  final bool media;
 
-  SMPostCard(
-      {this.imagePath,
-      this.name,
-      this.userName,
-      this.socialMedia,
-      this.textPost});
+  SMPostCard({
+    this.imagePath,
+    this.name,
+    this.userName,
+    this.socialMedia,
+    this.textPost,
+    this.media,
+  });
+
+  void _onPostTap(context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            body: Text(
+              socialMedia,
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SMPostDetails(
-      imagePath: imagePath,
-      name: name,
-      userName: userName,
-      socialMedia: socialMedia,
-      textPost: textPost,
+    return GestureDetector(
+      child: SMPostDetails(
+        imagePath: imagePath,
+        name: name,
+        userName: userName,
+        socialMedia: socialMedia,
+        textPost: textPost,
+        media: media,
+      ),
+      onTap: () => _onPostTap(context),
     );
   }
 }

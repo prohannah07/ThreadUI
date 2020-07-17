@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'SMPostProfileIcon.dart';
 import './SMPostImageCarousel.dart';
+import './SMPostInteractions.dart';
 
 class SMPostDetails extends StatelessWidget {
   final String imagePath;
@@ -9,99 +9,150 @@ class SMPostDetails extends StatelessWidget {
   final String userName;
   final String socialMedia;
   final String textPost;
+  final bool media;
 
-  SMPostDetails(
-      {this.imagePath,
-      this.name,
-      this.userName,
-      this.socialMedia,
-      this.textPost});
+  SMPostDetails({
+    this.imagePath,
+    this.name,
+    this.userName,
+    this.socialMedia,
+    this.textPost,
+    this.media,
+  });
 
-  Widget _userName() {
-    return Text(
-      name,
-      style: TextStyle(
-        fontSize: 14.0,
-        fontWeight: FontWeight.bold,
+  Widget _getUserImage() {
+    return Padding(
+      padding: EdgeInsets.only(right: 5.0),
+      child: CircleAvatar(
+        backgroundImage: AssetImage(imagePath),
+        radius: 25.0,
       ),
     );
   }
 
-  Widget _userUserName() {
+  Widget _getUserName() {
     return Padding(
-      padding: EdgeInsets.only(left: 3.0, right: 2.0, bottom: 4.0),
+      padding: EdgeInsets.only(right: 2.0),
       child: Text(
-        "@" + userName,
+        name,
         style: TextStyle(
           fontSize: 14.0,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Widget _userSocialMedia() {
+  Widget _getUserUsername() {
+    return Text(
+      "@" + userName,
+      style: TextStyle(
+        fontSize: 14.0,
+        color: Colors.black38,
+      ),
+    );
+  }
+
+  _chooseSMColor() {
+    if (socialMedia == "twitter") {
+      return Colors.blue;
+    } else if (socialMedia == "instagram") {
+      return Colors.red[600];
+    } else if (socialMedia == "facebook") {
+      return Colors.blue[900];
+    }
+  }
+
+  Widget _getUserSocialMedia() {
     return Image(
         image: AssetImage(
           "assets/socialMediaIcons/" + socialMedia + ".png",
         ),
         height: 15.0,
         width: 15.0,
-        color: Colors.blue
-      );
+        color: _chooseSMColor());
   }
 
-  Widget _userTextPost() {
+  Widget _getUserTextPost() {
     return Container(
       child: RichText(
         text: TextSpan(
           text: textPost,
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 14.0,
+          ),
         ),
-        maxLines: 5,
+        // maxLines: 5,
+        // overflow: TextOverflow.ellipsis,
       ),
       width: 280.0,
     );
   }
 
-  Widget _buildUserNameInfo() {
-    return Row(
-      children: [
-        _userName(),
-        _userUserName(),
-        _userSocialMedia(),
-      ],
+  Widget _buildUserNames() {
+    if (socialMedia == "facebook") {
+      return Padding(
+        padding: EdgeInsets.only(bottom: 2.0),
+        child: Row(
+          children: <Widget>[
+            _getUserName(),
+            _getUserSocialMedia(),
+          ],
+        ),
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.only(bottom: 2.0),
+      child: Row(
+        children: <Widget>[
+          _getUserName(),
+          _getUserUsername(),
+          _getUserSocialMedia(),
+        ],
+      ),
     );
   }
 
-  Widget _buildUserNameInfoAndPost() {
-    return Container(
-      padding: EdgeInsets.only(left: 7.0),
-      child: Column(
-        children: [
-          _buildUserNameInfo(),
-          _userTextPost(),
-          SMPostImageCarousel()
+  Widget _buildUserNamesAndPostDetails() {
+    if (media) {
+      return Column(
+        children: <Widget>[
+          _buildUserNames(),
+          _getUserTextPost(),
+          SMPostImageCarousel(),
+          SMPostInteractions(socialMedia: socialMedia,)
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
-      ),
+      );
+    }
+    return Column(
+      children: <Widget>[
+        _buildUserNames(),
+        _getUserTextPost(),
+        SMPostInteractions(socialMedia: socialMedia,)
+      ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  Widget _buildUserPost() {
+    return Row(
+      children: <Widget>[
+        _getUserImage(),
+        _buildUserNamesAndPostDetails(),
+      ],
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        // color: Colors.red,
-        child: Row(
-          children: <Widget>[
-            SMPostProfileIcon(imagePath: imagePath),
-            // _buildUserNameInfo(),
-            _buildUserNameInfoAndPost(),
-          ],
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-      ),
+    return Container(
+      child: _buildUserPost(),
+      padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+      // color: Colors.blue[100],
     );
   }
 }

@@ -57,6 +57,10 @@ flutter:
     - assets/socialMediaIcons/instagram.png
     - assets/socialMediaIcons/twitter.png
     - assets/samplePosts/sampleIcon.jpg
+    - assets/postInteractions/comment.png
+    - assets/postInteractions/share.png
+    - assets/postInteractions/heart.png
+    - assets/postInteractions/heart_outline.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
