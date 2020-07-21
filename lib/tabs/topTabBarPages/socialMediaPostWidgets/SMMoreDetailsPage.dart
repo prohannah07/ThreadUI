@@ -10,15 +10,16 @@ class SMMoreDetailsPage extends StatelessWidget {
   final String socialMedia;
   final String textPost;
   final bool media;
+  final List imageURLs;
 
-  SMMoreDetailsPage({
-    this.imagePath,
-    this.name,
-    this.userName,
-    this.socialMedia,
-    this.textPost,
-    this.media,
-  });
+  SMMoreDetailsPage(
+      {this.imagePath,
+      this.name,
+      this.userName,
+      this.socialMedia,
+      this.textPost,
+      this.media,
+      this.imageURLs});
 
   Widget _getUserImage() {
     return Padding(
@@ -92,6 +93,18 @@ class SMMoreDetailsPage extends StatelessWidget {
   }
 
   Widget _buildUserDetails() {
+    if (socialMedia == "facebook") {
+      return Padding(
+        padding: EdgeInsets.only(left: 4.0),
+        child: Row(
+          children: <Widget>[
+            _getUserImage(),
+            _getUserName(),
+            _getUserSocialMedia()
+          ],
+        ),
+      );
+    }
     return Padding(
       padding: EdgeInsets.only(left: 4.0),
       child: Row(
@@ -110,7 +123,9 @@ class SMMoreDetailsPage extends StatelessWidget {
       children: <Widget>[
         _buildUserDetails(),
         _getUserTextPost(context),
-        SMPostInteractions(socialMedia: socialMedia,)
+        SMPostInteractions(
+          socialMedia: socialMedia,
+        )
       ],
     );
   }

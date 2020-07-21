@@ -11,6 +11,7 @@ class SMPostCard extends StatelessWidget {
   final String socialMedia;
   final String textPost;
   final bool media;
+  final List imageURLs;
 
   SMPostCard({
     this.imagePath,
@@ -19,6 +20,7 @@ class SMPostCard extends StatelessWidget {
     this.socialMedia,
     this.textPost,
     this.media,
+    this.imageURLs
   });
 
   void _onPostTap(context) {
@@ -43,13 +45,18 @@ class SMPostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: SMPostDetails(
-        imagePath: imagePath,
-        name: name,
-        userName: userName,
-        socialMedia: socialMedia,
-        textPost: textPost,
-        media: media,
+      child: Container(
+        child: SMPostDetails(
+          imagePath: imagePath,
+          name: name,
+          userName: userName,
+          socialMedia: socialMedia,
+          textPost: textPost,
+          media: media,
+          imageURLs: imageURLs
+        ),
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white54,
       ),
       onTap: () => _onPostTap(context),
     );

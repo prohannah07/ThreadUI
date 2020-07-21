@@ -10,6 +10,7 @@ class SMPostDetails extends StatelessWidget {
   final String socialMedia;
   final String textPost;
   final bool media;
+  final List imageURLs;
 
   SMPostDetails({
     this.imagePath,
@@ -18,6 +19,7 @@ class SMPostDetails extends StatelessWidget {
     this.socialMedia,
     this.textPost,
     this.media,
+    this.imageURLs
   });
 
   Widget _getUserImage() {
@@ -120,8 +122,8 @@ class SMPostDetails extends StatelessWidget {
         children: <Widget>[
           _buildUserNames(),
           _getUserTextPost(),
-          SMPostImageCarousel(),
-          SMPostInteractions(socialMedia: socialMedia,)
+          SMPostImageCarousel(imageURLs: imageURLs),
+          SMPostInteractions(socialMedia: socialMedia)
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
       );

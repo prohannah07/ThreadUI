@@ -102,10 +102,10 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
     return TabBarView(
       controller: _tabController,
       children: [
-        TabBarPage(tabPageName: "All Tab!",),
-        TabBarPage(tabPageName: "Twitter Tab!",),
-        TabBarPage(tabPageName: "Facebook Tab!",),
-        TabBarPage(tabPageName: "Instagram Tab!",),
+        TabBarPage(tab: "all",),
+        TabBarPage(tab: "twitter",),
+        TabBarPage(tab: "facebook",),
+        TabBarPage(tab: "instagram",),
       ],
     );
   }
