@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../.././colorPallete/ThreadColorPallete.dart';
-import 'AddAccount.dart';
 import 'RemoveAccount.dart';
+import 'LoginPages/Login.dart';
 
 class ManageAccount extends StatefulWidget{
   ManageAccount({Key key}) : super(key: key);
@@ -13,6 +14,10 @@ class ManageAccount extends StatefulWidget{
 
 class _ManageAccountState extends State<ManageAccount>{
   List accountNames = ["Twitter", "Facebook", "Instagram"];
+  List socialMediaLogos = ["assets/socialMediaIcons/png/twitter.png", "assets/socialMediaIcons/png/facebook_logo.png", "assets/socialMediaIcons/png/instagram_logo.png"];
+  bool hasTwitterAccount = false;
+  bool hasFacebookAccount = false;
+  bool hasInstagramAccount = false;
   int index = 0;
 
   @override
@@ -38,20 +43,41 @@ class _ManageAccountState extends State<ManageAccount>{
             children: <Widget> [
               // Twitter Account
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfo())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
+                  accountInfo: LoginInfo(
+                    "${accountNames[0]} Username",
+                    accountNames[0],
+                    socialMediaLogos[0],
+                  ),
+                ))),
                 child: Image.asset("assets/socialMediaIcons/png/twitter.png", scale: 1.65, alignment: Alignment.center),
               ),
               Spacer(),
               // Facebook Account
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfo())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
+                  accountInfo: 
+                    LoginInfo(
+                      "${accountNames[1]} Username",
+                      accountNames[1],
+                      socialMediaLogos[1]
+                  ),
+                ))),
                 child: Image.asset("assets/socialMediaIcons/png/facebook_logo.png", scale: 1.6, alignment: Alignment.center),
               ),
               Spacer(),
               // Instagram Account
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfo())),
-                child: Image.asset("assets/socialMediaIcons/png/instagram_logo.png", scale: 4.1, alignment: Alignment.center),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
+                  accountInfo: 
+                    LoginInfo(
+                      "${accountNames[2]} Username",
+                      accountNames[2],
+                      socialMediaLogos[2]
+                      // "assets/socialMediaIcons/png/instagram_logo.png"
+                  ),
+                ))),
+                child: Image.asset("assets/socialMediaIcons/png/instagram_logo.png", scale: 4.1, alignment: Alignment.center), 
               ),
             ],
           ),
@@ -64,7 +90,7 @@ class _ManageAccountState extends State<ManageAccount>{
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddAccount())),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountLogin())),
               child: Text(
                 "Add Account",
                 style:
@@ -103,21 +129,25 @@ class _ManageAccountState extends State<ManageAccount>{
   }
 }
 
-// Needs editing to handle any account being viewed
-// May delete this later but included to have the social media icons have a purpose
-class AccountInfo extends StatefulWidget{
-  AccountInfo({Key key}) : super(key:key);
-  @override
-  _AccountInfoState createState() => _AccountInfoState();
+class LoginInfo{
+  final String username;
+  final String socialMediaName;
+  final String imageName;
+
+  LoginInfo(this.username, this.socialMediaName, this.imageName);
 }
 
-class _AccountInfoState extends State<AccountInfo> {
+class AccountInfoScreen extends StatelessWidget{
+  final LoginInfo accountInfo;
+
+  AccountInfoScreen({Key key, @required this.accountInfo}) : super(key: key);
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Account Information",
+          "${accountInfo.socialMediaName} Profile",
           style:
           TextStyle(
             fontSize: 27,
@@ -131,24 +161,38 @@ class _AccountInfoState extends State<AccountInfo> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            // Will need to replace the Username and Password with the one used by the actual User
-            "Username: \n USER1 \n",
-            textAlign: TextAlign.center,
-            style:
-            TextStyle(
-              fontSize: 40,
-            ),
-          ),
-          Icon(
+        // Initially displayed the social media logo at the top
+        //  Container(
+        //    width: 150,
+        //    height: 130,
+        //    child:
+        //      Image.asset(accountInfo.imageName, scale: 2.0, alignment: Alignment.topCenter),
+        //  ),
+          Padding(
+            padding: EdgeInsets.zero,
+            child: Icon(
             // Will replace icon with User profile picture - Saved as placeholder
             Icons.account_circle,
             color: Colors.blue[600],
-            size: 100.0,
+            size: 135.0,
+            ),
+          ),
+          Padding(
+            // padding: EdgeInsets.only(top: 40.0),
+            padding: EdgeInsets.only(top: 10.0),
+            child:
+              Text(
+               // Will need to replace the Username and Password with the one used by the actual User
+              "Username: \n ${accountInfo.username} \n",
+              textAlign: TextAlign.center,
+             style:
+              TextStyle(
+                fontSize: 40,
+             ),
+           ),
           ),
         ],
       ),
     );
   }
 }
-
