@@ -3,7 +3,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import './SMPostOnTapCarousel.dart';
 
 class SMPostImageCarousel extends StatelessWidget {
-  final List<String> imageURLs;
+  final List imageURLs;
 
   SMPostImageCarousel({this.imageURLs});
 
@@ -14,7 +14,7 @@ class SMPostImageCarousel extends StatelessWidget {
       child: Carousel(
         images: 
           imageURLs.map((url) {
-            return NetworkImage(url);
+            return NetworkImage(url["photoURL"]);
           }).toList(),
         dotSize: 5.0,
         dotIncreaseSize: 2,

@@ -4,20 +4,32 @@ import 'package:flutter_mobile_carousel/carousel_arrow.dart';
 import 'package:flutter_mobile_carousel/default_carousel_item.dart';
 import 'package:flutter_mobile_carousel/types.dart';
 
+import './SMPostDetails.dart';
+import 'package:video_player/video_player.dart';
+import './ChewieItem.dart';
+
 class SMPostOnTapCarousel extends StatelessWidget {
-  final List<String> imageURLs;
+  final List imageURLs;
 
   SMPostOnTapCarousel({this.imageURLs});
 
   List<Widget> _toList() {
     final children = <Widget>[];
     for (var i = 0; i < imageURLs.length; i++) {
-      children.add(Image.network(imageURLs[i]));
+      if (imageURLs[i]["type"] == "video") {
+        children.add(ChewieListItem(
+          videoPlayerController:
+              VideoPlayerController.network(imageURLs[i]["videoURL"]),
+          looping: true,
+        ));
+      } else {
+        children.add(Image.network(imageURLs[i]["photoURL"]));
+      }
     }
     return children;
   }
 
-  Widget _getCarousel(context){
+  Widget _getCarousel(context) {
     return Container(
       height: MediaQuery.of(context).size.height,
       color: Colors.black,
@@ -30,15 +42,13 @@ class SMPostOnTapCarousel extends StatelessWidget {
     );
   }
 
-  void _onDismiss(){
-    // Navigator.of(context).pop();
-    print("hi");
-  }
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Dismissible(
+      key: Key("value"),
       child: _getCarousel(context),
+      direction: DismissDirection.vertical,
+      onDismissed: (_) => Navigator.of(context).pop(),
     );
   }
 }
