@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import './SMPostOnTapCarousel.dart';
 
 class SMPostImageCarousel extends StatelessWidget {
   final List<String> imageURLs;
@@ -27,14 +28,26 @@ class SMPostImageCarousel extends StatelessWidget {
     );
   }
 
-  _onTap(){
+  _onTap(context){
     print("Pictures");
   }
 
-  Widget _onTapGetCarousel(){
+  _onTap2(context){
+      Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            body: SMPostOnTapCarousel(imageURLs: imageURLs,)
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _onTapGetCarousel(context){
     return GestureDetector(
       child: _getCarousel(),
-      onTap: _onTap
+      onTap: () => _onTap2(context)
     );
   }
 
@@ -42,7 +55,7 @@ class SMPostImageCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 4.0),
-      child: _onTapGetCarousel(),
+      child: _onTapGetCarousel(context),
     );
   }
 }

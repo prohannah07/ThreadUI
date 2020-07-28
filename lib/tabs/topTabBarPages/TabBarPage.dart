@@ -83,40 +83,5 @@ class TabBarPage extends StatelessWidget {
         separatorBuilder: (BuildContext context, int index) => const Divider(),
       ),
     );
-
-    // return Scaffold(
-    //   body: ListView(
-    //     children: [
-    //       _dummyText(),
-    //       SMPostCard(
-    //         imagePath: "assets/samplePosts/sampleIcon.jpg",
-    //         name: "Hannah Fragante",
-    //         userName: "xdudeitshannah",
-    //         socialMedia: "twitter",
-    //         textPost:
-    //             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. ",
-    //         media: false
-    //       ),
-    //       SMPostCard(
-    //         imagePath: "assets/samplePosts/sampleIcon.jpg",
-    //         name: "Hannah Fragante",
-    //         userName: "dudeitshannah",
-    //         socialMedia: "instagram",
-    //         textPost:
-    //             "Lorem ipsum dolor sit amet, ",
-    //         media: true
-    //       ),
-    //       SMPostCard(
-    //         imagePath: "assets/samplePosts/sampleIcon.jpg",
-    //         name: "Hannah Fragante",
-    //         userName: "dudeitshannah",
-    //         socialMedia: "facebook",
-    //         textPost:
-    //             "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. ",
-    //         media: false
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
