@@ -24,7 +24,7 @@ class SMPostOnTapCarousel extends StatelessWidget {
           aspectRatio: imageURLs[i]["aspectRatio"],
         ));
       } else {
-        children.add(Image.network(imageURLs[i]["photoURL"]));
+        children.add(Image.network(imageURLs[i]["photoURL"], fit: BoxFit.fitWidth,));
       }
     }
     return children;
