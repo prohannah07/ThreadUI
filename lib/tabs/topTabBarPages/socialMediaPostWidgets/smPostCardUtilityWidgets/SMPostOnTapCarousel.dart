@@ -21,6 +21,7 @@ class SMPostOnTapCarousel extends StatelessWidget {
           videoPlayerController:
               VideoPlayerController.network(imageURLs[i]["videoURL"]),
           looping: true,
+          aspectRatio: imageURLs[i]["aspectRatio"],
         ));
       } else {
         children.add(Image.network(imageURLs[i]["photoURL"]));

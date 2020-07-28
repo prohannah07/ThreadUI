@@ -114,7 +114,7 @@ class TabBarPage extends StatelessWidget {
       "media": true,
       "imageURLs": [
         {'type':'photo', 'photoURL':'https://kpopthing.com/wp-content/uploads/2020/02/twicelights-cancelled-min.jpg'},
-        {'type':'video', 'photoURL':'http://pbs.twimg.com/tweet_video_thumb/EdfAIzAXoAExqVO.jpg', "videoURL":"https://video.twimg.com/tweet_video/EdfAIzAXoAExqVO.mp4"}
+        {'type':'video', 'photoURL':'http://pbs.twimg.com/tweet_video_thumb/EdfAIzAXoAExqVO.jpg', "videoURL":"https://video.twimg.com/tweet_video/EdfAIzAXoAExqVO.mp4", "aspectRatio":1/1}
       ],
     }
   ];
