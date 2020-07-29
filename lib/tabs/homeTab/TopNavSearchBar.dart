@@ -43,6 +43,15 @@ class _TopNavSearchBarState extends State<TopNavSearchBar> {
     return TextField(
       controller: textController,
       focusNode: myFocusNode,
+      cursorColor: ThreadColorPalette.red1,
+      textInputAction: TextInputAction.search,
+      onSubmitted: (value){
+        print("search!! YEET!");
+        myFocusNode.unfocus();
+        print(textController.text);
+        textController.clear();
+      },
+      style: TextStyle(decoration: TextDecoration.none),
       decoration: InputDecoration(
         hintText: 'search',
         fillColor: ThreadColorPalette.red1.withOpacity(.35),
