@@ -70,7 +70,7 @@ class TabBarPage extends StatelessWidget {
       "userName": "xdudeitshannah",
       "socialMedia": "twitter",
       "textPost":
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. ",
+          "This is for Rachel you big fat white nasty smelling fat bitch why you took me off the motherfuckin schedule with your trifflin dirty white racist ass you big fat bitch oompa loompa body ass bitch I'm coming up there and I'm gonna beat the f*ck out of you bitch",
       "media": false,
       "imageURLs": [],
     },
@@ -79,7 +79,7 @@ class TabBarPage extends StatelessWidget {
       "name": "Hannah Fragante",
       "userName": "dudeitshannah",
       "socialMedia": "instagram",
-      "textPost": "Lorem ipsum dolor sit amet, ",
+      "textPost": "You should have taken Kiyoshi's advice, Aang.👀 #OnlyJusticeWillBringPeace",
       "media": true,
       "imageURLs": [
         {'type':'photo', 'photoURL':'https://animewp.com/wallpaper/2015/05/avatar-the-last-airbender-characters-6-free-hd-wallpaper.jpg'},
@@ -100,7 +100,7 @@ class TabBarPage extends StatelessWidget {
       "userName": "",
       "socialMedia": "facebook",
       "textPost":
-          "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. ",
+          "Do you guys know what will happen if everyone on earth fell asleep at the same time? Well, if everyone fell asleep at the same time, no one would be awake.",
       "media": false,
       "imageURLs": [],
     },
@@ -110,7 +110,7 @@ class TabBarPage extends StatelessWidget {
       "userName": "xdudeitshannah",
       "socialMedia": "twitter",
       "textPost":
-          "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. ",
+          "TWICE best gg",
       "media": true,
       "imageURLs": [
         {'type':'photo', 'photoURL':'https://kpopthing.com/wp-content/uploads/2020/02/twicelights-cancelled-min.jpg'},
