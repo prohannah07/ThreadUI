@@ -38,7 +38,7 @@ class _AccountSetupState extends State<AccountSetup> {
   }
 
   Widget _accountSignInButton(
-      String socailMediaName, String socialMediaImagePath) {
+      String socialMediaName, String socialMediaImagePath) {
     return Container(
       width: 370.0,
       height: 70,
@@ -64,7 +64,7 @@ class _AccountSetupState extends State<AccountSetup> {
                   children: <TextSpan>[
                     TextSpan(text: "Sign in to "),
                     TextSpan(
-                        text: "$socailMediaName",
+                        text: "$socialMediaName",
                         style: TextStyle(fontWeight: FontWeight.bold))
                   ],
                 ),
@@ -74,7 +74,7 @@ class _AccountSetupState extends State<AccountSetup> {
           onPressed: () {
             //http.get();
             String socialMedia =
-                socailMediaName[0].toLowerCase() + socailMediaName.substring(1);
+                socialMediaName[0].toLowerCase() + socialMediaName.substring(1);
             String loginEndPoint =
                 "http://10.0.2.2:8080/" + socialMedia + "/login";
             print(loginEndPoint);
