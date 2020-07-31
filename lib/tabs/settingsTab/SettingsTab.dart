@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../.././colorPallete/ThreadColorPallete.dart';
-import 'ManageAccounts.dart';
+import 'ManageMyAccountsTab.dart';
 import 'PrivacyAndSecurity.dart';
 import 'TermsAndServices.dart';
 import 'AboutPage.dart';
@@ -20,7 +20,7 @@ class SettingsTab extends StatelessWidget {
             ),
         ),
         backgroundColor: ThreadColorPalette.red2,
-
+        
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -35,7 +35,7 @@ class SettingsTab extends StatelessWidget {
                     leading: Icon(Icons.account_circle),
                     title: Text("Manage My Accounts"),
                     trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageAccount())),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ManageMyAccounts())),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5.0,),

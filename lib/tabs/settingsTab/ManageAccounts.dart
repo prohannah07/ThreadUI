@@ -5,6 +5,8 @@ import '../.././colorPallete/ThreadColorPallete.dart';
 import 'RemoveAccount.dart';
 import 'LoginPages/Login.dart';
 
+// Not used anymore
+
 class ManageAccount extends StatefulWidget{
   ManageAccount({Key key}) : super(key: key);
   @override
@@ -13,12 +15,67 @@ class ManageAccount extends StatefulWidget{
 }
 
 class _ManageAccountState extends State<ManageAccount>{
+  List imageScales = [1.62, 1.6, 4.1];
   List accountNames = ["Twitter", "Facebook", "Instagram"];
   List socialMediaLogos = ["assets/socialMediaIcons/png/twitter.png", "assets/socialMediaIcons/png/facebook_logo.png", "assets/socialMediaIcons/png/instagram_logo.png"];
-  bool hasTwitterAccount = false;
-  bool hasFacebookAccount = false;
-  bool hasInstagramAccount = false;
+  bool hasTwitterAccount = true;
+  bool hasFacebookAccount = true;
+  bool hasInstagramAccount = true;
   int index = 0;
+
+  Widget _socialMediaIconHandler(String socialMediaName, String socialMediaImagePath, double imageScale){
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
+        accountInfo: LoginInfo(
+          "$socialMediaName Username",
+          socialMediaName,
+          socialMediaImagePath,
+        ),
+        ))),
+        //child: Image.asset(socialMediaImagePath, scale: imageScale, alignment: Alignment.center),
+        child: CircleAvatar(
+          backgroundImage: AssetImage(socialMediaImagePath), //scale: imageScale, alignment: Alignment.center),
+          radius: 65.0,
+          ),
+        );
+  }
+
+  List<Widget> _formatApps(){
+    List<Widget> appsUsed = List<Widget>();
+    if (hasTwitterAccount){
+      appsUsed.add(_socialMediaIconHandler(accountNames[0], socialMediaLogos[0], imageScales[0]));
+    }
+    if (hasFacebookAccount){
+      appsUsed.add(_socialMediaIconHandler(accountNames[1], socialMediaLogos[1], imageScales[1]));
+    }
+    if (hasInstagramAccount){
+      appsUsed.add(_socialMediaIconHandler(accountNames[2], socialMediaLogos[2], imageScales[2]));
+    }
+    return appsUsed;
+  }
+
+  Widget _displayApps(){
+    if (hasTwitterAccount && hasFacebookAccount && hasInstagramAccount){
+      return Container(
+        height: 150.0,
+        width: double.infinity,
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: _formatApps(),
+        ),
+      ); 
+    }
+    else{
+      return Container(
+        height: 150.0,
+        width: 310.0,
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: _formatApps(),
+        ),
+      ); 
+    }
+  }
 
   @override
   Widget build(BuildContext context){
@@ -39,86 +96,47 @@ class _ManageAccountState extends State<ManageAccount>{
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget> [
-          Row(
-            children: <Widget> [
-              // Twitter Account
-              GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
-                  accountInfo: LoginInfo(
-                    "${accountNames[0]} Username",
-                    accountNames[0],
-                    socialMediaLogos[0],
-                  ),
-                ))),
-                child: Image.asset("assets/socialMediaIcons/png/twitter.png", scale: 1.65, alignment: Alignment.center),
-              ),
-              Spacer(),
-              // Facebook Account
-              GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
-                  accountInfo: 
-                    LoginInfo(
-                      "${accountNames[1]} Username",
-                      accountNames[1],
-                      socialMediaLogos[1]
-                  ),
-                ))),
-                child: Image.asset("assets/socialMediaIcons/png/facebook_logo.png", scale: 1.6, alignment: Alignment.center),
-              ),
-              Spacer(),
-              // Instagram Account
-              GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountInfoScreen(
-                  accountInfo: 
-                    LoginInfo(
-                      "${accountNames[2]} Username",
-                      accountNames[2],
-                      socialMediaLogos[2]
-                      // "assets/socialMediaIcons/png/instagram_logo.png"
-                  ),
-                ))),
-                child: Image.asset("assets/socialMediaIcons/png/instagram_logo.png", scale: 4.1, alignment: Alignment.center), 
-              ),
-            ],
-          ),
-          Container(
+          _displayApps(),
+          Container(height: 30.0, width: double.infinity),
+          ButtonTheme(
             height: 50.0,
-            width: 250.0,
-            alignment: Alignment.center,
+            minWidth: 300.0,
             child: RaisedButton(
               color: ThreadColorPalette.red1,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AccountLogin())),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => 
+                AccountLogin())),
               child: Text(
                 "Add Account",
                 style:
                 TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 25,
+                  fontSize: 27,
                 ),
               ),
             ),
           ),
-          Container(
+          Container(height: 15.0, width: double.infinity),
+          ButtonTheme(
             height: 50.0,
-            width: 250.0,
-            alignment: Alignment.center,
+            minWidth: 300.0,
             child: RaisedButton(
               color: ThreadColorPalette.red1,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                  ),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RemoveAccount())),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => 
+              RemoveAccount(hasTwitterAccount: hasTwitterAccount, hasFacebookAccount: hasFacebookAccount, hasInstagramAccount: hasInstagramAccount))),
                  child: Text(
                    "Remove Account",
                    style:
                    TextStyle(
                      fontWeight: FontWeight.bold,
                      color: Colors.white,
-                     fontSize: 22,
+                     fontSize: 27,
                     ),
                   ),
                 ),
@@ -161,13 +179,6 @@ class AccountInfoScreen extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-        // Initially displayed the social media logo at the top
-        //  Container(
-        //    width: 150,
-        //    height: 130,
-        //    child:
-        //      Image.asset(accountInfo.imageName, scale: 2.0, alignment: Alignment.topCenter),
-        //  ),
           Padding(
             padding: EdgeInsets.zero,
             child: Icon(

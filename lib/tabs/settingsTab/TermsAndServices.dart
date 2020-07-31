@@ -10,10 +10,7 @@ class TermsAndServices extends StatelessWidget{
         title: Text(
             "Terms and Services",
           style:
-            TextStyle(
-              fontSize: 27,
-              fontWeight: FontWeight.bold,
-            ),
+            TextStyle(fontSize: 27, fontWeight: FontWeight.bold,),
         ),
         centerTitle: true,
         backgroundColor: ThreadColorPalette.red2,
