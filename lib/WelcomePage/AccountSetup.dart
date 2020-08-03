@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../colorPallete/ThreadColorPallete.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async';
+// import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountSetup extends StatefulWidget {
   @override
@@ -71,14 +74,23 @@ class _AccountSetupState extends State<AccountSetup> {
               ),
             ],
           ),
-          onPressed: () {
+          onPressed: () async {
             //http.get();
             String socialMedia =
                 socialMediaName[0].toLowerCase() + socialMediaName.substring(1);
+            //Future<http.Response> response =  http.get('http://10.0.2.2:8080/twitter/search?q=covid');
+            //print(response.then((textResult) {print(textResult.body);}));
+            //print(response.then((textResult) {print(textResult.body.runtimeType);}));
             String loginEndPoint =
                 "http://10.0.2.2:8080/" + socialMedia + "/login";
             print(loginEndPoint);
             Future<http.Response> response = http.get(loginEndPoint);
+            if (await canLaunch(loginEndPoint)){
+              await launch(loginEndPoint);
+            }
+            else{
+              throw 'Could not launch $loginEndPoint';
+            }
           },
         ),
       ),

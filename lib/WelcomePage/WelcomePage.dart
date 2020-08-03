@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import '../colorPallete/ThreadColorPallete.dart';
 import 'AccountSetup.dart';
+
 // import 'package:google_fonts/google_fonts.dart';
 
 // Runs outside of main App for testing purposes
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget{
-  @override
+  @override 
   Widget build(BuildContext context){
     return MaterialApp(
       home: WelcomeScreen(),
