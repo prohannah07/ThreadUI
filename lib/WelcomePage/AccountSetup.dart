@@ -19,6 +19,12 @@ class _AccountSetupState extends State<AccountSetup> {
     "assets/socialMediaIcons/png/facebook_logo.png",
     "assets/socialMediaIcons/png/instagram_logo.png"
   ];
+  List socialMediaNames = [
+    "Twitter",
+    "Facebook",
+    "Instagram"
+  ];
+
   double imageScale = 20.0;
 
   Widget _accountLoginTitle() {
@@ -40,8 +46,10 @@ class _AccountSetupState extends State<AccountSetup> {
     );
   }
 
+   
+
   Widget _accountSignInButton(
-      String socialMediaName, String socialMediaImagePath) {
+    String socialMediaName, String socialMediaImagePath) {
     return Container(
       width: 370.0,
       height: 70,
@@ -53,7 +61,7 @@ class _AccountSetupState extends State<AccountSetup> {
           child: Row(
             children: <Widget>[
               CircleAvatar(
-                backgroundImage: AssetImage(
+                backgroundImage: new AssetImage(
                     socialMediaImagePath), //scale: imageScale, alignment: Alignment.center),
                 radius: imageScale,
               ),
@@ -74,6 +82,8 @@ class _AccountSetupState extends State<AccountSetup> {
               ),
             ],
           ),
+          onPressed:(){},
+          /*
           onPressed: () async {
             //http.get();
             String socialMedia =
@@ -84,7 +94,7 @@ class _AccountSetupState extends State<AccountSetup> {
             String loginEndPoint =
                 "http://10.0.2.2:8080/" + socialMedia + "/login";
             print(loginEndPoint);
-            Future<http.Response> response = http.get(loginEndPoint);
+            //Future<http.Response> response = http.get(loginEndPoint);
             if (await canLaunch(loginEndPoint)){
               await launch(loginEndPoint);
             }
@@ -92,9 +102,26 @@ class _AccountSetupState extends State<AccountSetup> {
               throw 'Could not launch $loginEndPoint';
             }
           },
+          */
         ),
       ),
     );
+  }
+
+   List<Widget> _formatLoginButtons(){
+    List<Widget> appsUsed = List<Widget>();
+    if (!hasTwitterAccount){
+      appsUsed.add(_accountSignInButton(socialMediaNames[0], socialMediaLogos[0]));
+      appsUsed.add(Container(height: 10.0, width: double.infinity));
+    }
+    if (!hasFacebookAccount){
+      appsUsed.add(_accountSignInButton(socialMediaNames[1], socialMediaLogos[1]));
+      appsUsed.add(Container(height: 10.0, width: double.infinity));
+    }
+    if (!hasInstagramAccount){
+      appsUsed.add(_accountSignInButton(socialMediaNames[2], socialMediaLogos[2]));
+    }
+    return appsUsed;
   }
 
   @override
@@ -122,11 +149,20 @@ class _AccountSetupState extends State<AccountSetup> {
               height: 80.0,
               width: double.infinity,
             ),
-            _accountSignInButton("Twitter", socialMediaLogos[0]),
-            Container(height: 15.0, width: double.infinity),
-            _accountSignInButton("Facebook", socialMediaLogos[1]),
-            Container(height: 15.0, width: double.infinity),
-            _accountSignInButton("Instagram", socialMediaLogos[2]),
+            Container(
+              height: 250.0,
+              width: double.infinity,
+              alignment: Alignment.topCenter,
+              child: Column(children: _formatLoginButtons()),
+            ),
+            
+            
+            
+            //_accountSignInButton("Twitter", "assets/socialMediaIcons/png/twitter.png"),
+            //Container(height: 15.0, width: double.infinity),
+            //_accountSignInButton("Facebook", socialMediaLogos[1]),
+            //Container(height: 15.0, width: double.infinity),
+            //_accountSignInButton("Instagram", socialMediaLogos[2]),
           ],
         ),
       ),
