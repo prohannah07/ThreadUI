@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../colorPallete/ThreadColorPallete.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
+// import 'package:http/http.dart' as http;
+// import 'dart:async';
 // import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class AccountSetup extends StatefulWidget {
   @override
@@ -108,7 +108,7 @@ class _AccountSetupState extends State<AccountSetup> {
     );
   }
 
-   List<Widget> _formatLoginButtons(){
+   List<Widget> _addLoginButtons(){
     List<Widget> appsUsed = List<Widget>();
     if (!hasTwitterAccount){
       appsUsed.add(_accountSignInButton(socialMediaNames[0], socialMediaLogos[0]));
@@ -120,8 +120,85 @@ class _AccountSetupState extends State<AccountSetup> {
     }
     if (!hasInstagramAccount){
       appsUsed.add(_accountSignInButton(socialMediaNames[2], socialMediaLogos[2]));
+      appsUsed.add(Container(height: 10.0, width: double.infinity));
+    }
+    if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount){
+      double paddingVal = 120.0;
+      int len = appsUsed.length;
+      if (appsUsed.length == 2){paddingVal = 150.0;}
+    
+      Widget finishButton = Padding(
+        padding: EdgeInsets.only(top: paddingVal),
+        child: Container(
+        width: 370.0,
+        height: 70,
+        child: ButtonTheme(
+          child: RaisedButton(
+            color: Colors.white,
+            shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
+            child: Text("Finish", style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold,
+              color: ThreadColorPalette.red1,
+            ),),
+            onPressed: (){}, // Should redirect to primary search screen
+            )
+          )
+        )
+      );      
+      appsUsed.add(finishButton);
     }
     return appsUsed;
+  }
+
+  Widget _formatButtons(){
+    if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount){ // Has at least 1 account --> Allow users to commplete setup
+      return Column(
+        children: <Widget>[
+          Container(
+            height: 100.0,
+            width: double.infinity,
+          ),
+          _accountLoginTitle(),
+          Container(
+            height: 60.0,
+            width: double.infinity,
+          ),
+          Container(
+            height: 370.0,
+            width: double.infinity,
+            //alignment: Alignment.center,
+            // color: Colors.black,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: _addLoginButtons()),
+            ),
+          ],
+        );
+    }
+    else{ // Users have not yet logged into an account --> Needs to provide at least 1 to continue
+      return Column(
+      children: <Widget>[
+        Container(
+          height: 100.0,
+          width: double.infinity,
+        ),
+        _accountLoginTitle(),
+        Container(
+          height: 60.0,
+          width: double.infinity,
+        ),
+        Container(
+          height: 370.0,
+          width: double.infinity,
+          //alignment: Alignment.center,
+          // color: Colors.black,
+          child: Column(
+            children: _addLoginButtons()),
+          ),
+        ],
+      );
+    }
   }
 
   @override
@@ -131,40 +208,12 @@ class _AccountSetupState extends State<AccountSetup> {
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.2, 1],
-            colors: [ThreadColorPalette.red1, ThreadColorPalette.red2],
+            image: DecorationImage(
+              image: AssetImage("assets/backgrounds/welcomeScreenResized.PNG"),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 130.0,
-              width: double.infinity,
-            ),
-            _accountLoginTitle(),
-            Container(
-              height: 80.0,
-              width: double.infinity,
-            ),
-            Container(
-              height: 250.0,
-              width: double.infinity,
-              alignment: Alignment.topCenter,
-              child: Column(children: _formatLoginButtons()),
-            ),
-            
-            
-            
-            //_accountSignInButton("Twitter", "assets/socialMediaIcons/png/twitter.png"),
-            //Container(height: 15.0, width: double.infinity),
-            //_accountSignInButton("Facebook", socialMediaLogos[1]),
-            //Container(height: 15.0, width: double.infinity),
-            //_accountSignInButton("Instagram", socialMediaLogos[2]),
-          ],
-        ),
+        child: _formatButtons(),
       ),
     );
   }

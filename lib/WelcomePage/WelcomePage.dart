@@ -99,19 +99,14 @@ class WelcomeScreen extends StatelessWidget{
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.2, 1],
-            colors: [
-              ThreadColorPalette.red1,
-              ThreadColorPalette.red2
-            ],
+            image: DecorationImage(
+              image: AssetImage("assets/backgrounds/welcomeScreenResized.PNG"),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
         child: Column(
           children: <Widget>[
-            Container(height: 70.0, width: double.infinity,
+            Container(height: 95.0, width: double.infinity,
             ),
             _threadTitle(),
             Container(height: 15, width: double.infinity),

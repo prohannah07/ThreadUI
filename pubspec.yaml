@@ -59,6 +59,7 @@ flutter:
     - assets/socialMediaIcons/png/instagram_logo.png
     - assets/socialMediaIcons/png/twitter.png
     - assets/backgrounds/mainBackground.png
+    - assets/backgrounds/welcomeScreenResized.PNG
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
