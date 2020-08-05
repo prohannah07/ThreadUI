@@ -108,7 +108,7 @@ class _AccountSetupState extends State<AccountSetup> {
     );
   }
 
-   List<Widget> _addLoginButtons(){
+   List<Widget> _addLoginButtons(screenWidth, screenHeight){
     List<Widget> appsUsed = List<Widget>();
     if (!hasTwitterAccount){
       appsUsed.add(_accountSignInButton(socialMediaNames[0], socialMediaLogos[0]));
@@ -123,9 +123,7 @@ class _AccountSetupState extends State<AccountSetup> {
       appsUsed.add(Container(height: 10.0, width: double.infinity));
     }
     if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount){
-      double paddingVal = 120.0;
-      int len = appsUsed.length;
-      if (appsUsed.length == 2){paddingVal = 150.0;}
+      double paddingVal = screenHeight*0.2;
     
       Widget finishButton = Padding(
         padding: EdgeInsets.only(top: paddingVal),
@@ -150,28 +148,30 @@ class _AccountSetupState extends State<AccountSetup> {
     return appsUsed;
   }
 
-  Widget _formatButtons(){
+  Widget _formatButtons(screenWidth, screenHeight){
+    print("Screen Width: $screenWidth");
+    print("Screen Height: $screenHeight");
     if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount){ // Has at least 1 account --> Allow users to commplete setup
       return Column(
         children: <Widget>[
           Container(
-            height: 100.0,
+            height: screenHeight*(1/6),
             width: double.infinity,
           ),
           _accountLoginTitle(),
           Container(
-            height: 60.0,
+            height: screenHeight*(1/12),
             width: double.infinity,
           ),
           Container(
-            height: 370.0,
+            height: screenHeight*0.55,
             width: double.infinity,
             //alignment: Alignment.center,
             // color: Colors.black,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
-              children: _addLoginButtons()),
+              children: _addLoginButtons(screenWidth, screenHeight)),
             ),
           ],
         );
@@ -180,21 +180,20 @@ class _AccountSetupState extends State<AccountSetup> {
       return Column(
       children: <Widget>[
         Container(
-          height: 100.0,
+          height: screenHeight*0.17,
           width: double.infinity,
         ),
         _accountLoginTitle(),
         Container(
-          height: 60.0,
+          height: screenHeight*0.09,
           width: double.infinity,
         ),
         Container(
-          height: 370.0,
+          height: screenHeight*0.6,
           width: double.infinity,
           //alignment: Alignment.center,
-          // color: Colors.black,
           child: Column(
-            children: _addLoginButtons()),
+            children: _addLoginButtons(screenWidth,screenHeight)),
           ),
         ],
       );
@@ -203,6 +202,8 @@ class _AccountSetupState extends State<AccountSetup> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -213,7 +214,7 @@ class _AccountSetupState extends State<AccountSetup> {
               fit: BoxFit.fill,
             ),
           ),
-        child: _formatButtons(),
+        child: _formatButtons(screenWidth, screenHeight),
       ),
     );
   }

@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget{
 }
 
 class WelcomeScreen extends StatelessWidget{
-
   Widget _threadTitle(){
     return Text(
       "Welcome to Thread!",
@@ -37,12 +36,12 @@ class WelcomeScreen extends StatelessWidget{
       );
   }
 
-  Widget _threadLogo(){
+  Widget _threadLogo(screenWidth, screenHeight){
     return Container(
-      // Will be replaced with logo
-      height: 200.0,
-      width: 200.0,
-      margin: EdgeInsets.only(top: 45.0),
+      // Will be replaced with logo - May have issues with height/width
+      height: screenHeight*0.3,
+      width: screenWidth*0.5,
+      margin: EdgeInsets.only(top: screenHeight*0.06),
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
@@ -74,10 +73,12 @@ class WelcomeScreen extends StatelessWidget{
     );
   }
 
-  Widget _getStartedButton(BuildContext context){
+  Widget _getStartedButton(BuildContext context, screenWidth, screenHeight){
+    print("ScreenWidth: $screenWidth");
+    print("ScreenHeight: $screenHeight");
     return ButtonTheme(
-      minWidth: 280.0,
-      height: 70.0,
+      minWidth: screenWidth*0.85,
+      height: screenHeight*0.11,
       child: RaisedButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
         child: Text("Get Started",
@@ -94,6 +95,8 @@ class WelcomeScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -106,13 +109,13 @@ class WelcomeScreen extends StatelessWidget{
           ),
         child: Column(
           children: <Widget>[
-            Container(height: 95.0, width: double.infinity,
+            Container(height: screenHeight*0.14, width: double.infinity,
             ),
             _threadTitle(),
-            Container(height: 15, width: double.infinity),
-            _threadLogo(),
-            Container(height: 95, width: double.infinity), // Used to space logo and text
-            _getStartedButton(context),
+            Container(height: screenHeight*0.01, width: double.infinity),
+            _threadLogo(screenWidth, screenHeight),
+            Container(height: screenHeight*0.14, width: double.infinity), // Used to space logo and text
+            _getStartedButton(context, screenWidth, screenHeight),
           ],
         ),
       ),
