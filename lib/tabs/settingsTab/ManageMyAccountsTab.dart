@@ -38,20 +38,25 @@ class ManageMyAccounts extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0)),
                 child: Column(children: <Widget>[
                   ListTile(
-                    //leading: Icon(Icons.add),
-                    title: Text("Add Account"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddAccount(
-                                  hasTwitterAccount: hasTwitterAccount,
-                                  hasFacebookAccount: hasFacebookAccount,
-                                  hasInstagramAccount: hasInstagramAccount,
-                                  screenHeight: screenHeight,
-                                  screenWidth: screenWidth,
-                                ))),
-                  ),
+                      //leading: Icon(Icons.add),
+                      title: Text("Add Account"),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                      enabled: !_loggedIntoAllAccounts,
+                      onTap: () {
+                        if (!_loggedIntoAllAccounts) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddAccount(
+                                        hasTwitterAccount: hasTwitterAccount,
+                                        hasFacebookAccount: hasFacebookAccount,
+                                        hasInstagramAccount:
+                                            hasInstagramAccount,
+                                        screenHeight: screenHeight,
+                                        screenWidth: screenWidth,
+                                      )));
+                        }
+                      }),
                   Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 5.0,

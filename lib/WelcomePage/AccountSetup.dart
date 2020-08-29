@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../colorPallete/ThreadColorPallete.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:async';
-// import 'dart:convert';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
+import '../tabs/testing/testingSearch.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 class AccountSetup extends StatefulWidget {
   @override
@@ -20,7 +22,6 @@ class _AccountSetupState extends State<AccountSetup> {
     "assets/socialMediaIcons/png/instagram_logo.png"
   ];
   List socialMediaNames = ["Twitter", "Facebook", "Instagram"];
-
   double imageScale = 20.0;
 
   Widget _accountLoginTitle() {
@@ -79,8 +80,8 @@ class _AccountSetupState extends State<AccountSetup> {
               ),
             ],
           ),
-          onPressed: () {},
-          /*
+          //onPressed: () {}
+
           onPressed: () async {
             //http.get();
             String socialMedia =
@@ -92,14 +93,13 @@ class _AccountSetupState extends State<AccountSetup> {
                 "http://10.0.2.2:8080/" + socialMedia + "/login";
             print(loginEndPoint);
             //Future<http.Response> response = http.get(loginEndPoint);
-            if (await canLaunch(loginEndPoint)){
-              await launch(loginEndPoint);
-            }
-            else{
+            if (await canLaunch(loginEndPoint)) {
+              var launchURL = await launch(loginEndPoint);
+              print("launchURL: $launchURL");
+            } else {
               throw 'Could not launch $loginEndPoint';
             }
           },
-          */
         ),
       ),
     );
@@ -122,6 +122,17 @@ class _AccountSetupState extends State<AccountSetup> {
           .add(_accountSignInButton(socialMediaNames[2], socialMediaLogos[2]));
       appsUsed.add(Container(height: 10.0, width: double.infinity));
     }
+    // Delete this later
+    // if (true) {
+    //   appsUsed.add(
+    //     RaisedButton(
+    //         child: Text("CLICK ME!"),
+    //         onPressed: () async {
+    //           var result = await post();
+    //           print(result);
+    //         }),
+    //   );
+    // }
     if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount) {
       double paddingVal = screenHeight * 0.2;
 
@@ -143,7 +154,11 @@ class _AccountSetupState extends State<AccountSetup> {
                     color: ThreadColorPalette.red1,
                   ),
                 ),
-                onPressed: () {}, // Should redirect to primary search screen
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Searchbar())), // Should redirect to primary search screen
               ))));
       appsUsed.add(finishButton);
     }
@@ -218,5 +233,31 @@ class _AccountSetupState extends State<AccountSetup> {
         child: _formatButtons(screenWidth, screenHeight),
       ),
     );
+  }
+
+  Future<List<dynamic>> search() async {
+    final String apiURL = "http://10.0.2.2:8080/twitter/search?q=covid";
+    var result = await http.get(apiURL);
+
+    if (result.statusCode == 200) {
+      print("Status code =200");
+    } else {
+      throw Exception("Failed to load search results");
+    }
+
+    return json.decode(result.body);
+  }
+
+  Future<dynamic> post() async {
+    final String apiURL = "http://10.0.2.2:8080/twitter/post";
+    var result = await http.get(apiURL);
+
+    if (result.statusCode == 200) {
+      print("Status code =200");
+    } else {
+      throw Exception("Failed to load search results");
+    }
+
+    return json.decode(result.body);
   }
 }

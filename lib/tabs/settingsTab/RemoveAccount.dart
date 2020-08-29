@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../.././colorPallete/ThreadColorPallete.dart';
 
+enum ConfirmSignOut { CANCEL, CONFIRM }
+
 // ignore: must_be_immutable
 class RemoveAccount extends StatefulWidget {
   List imageScales = [1.62, 1.6, 4.1];
@@ -31,20 +33,72 @@ class RemoveAccount extends StatefulWidget {
 }
 
 class _RemoveAccountState extends State<RemoveAccount> {
+  Future<ConfirmSignOut> _asyncConfirmDialog(
+      BuildContext context,
+      String socialMediaName,
+      String socialMediaImagePath,
+      double imageScale) async {
+    return showDialog<ConfirmSignOut>(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout', style: TextStyle(fontSize: 25.0)),
+          content: _signoutContent(
+              socialMediaName, socialMediaImagePath, imageScale),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('NO',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: ThreadColorPalette.red1,
+                      fontWeight: FontWeight.w900)),
+              onPressed: () {
+                Navigator.of(context).pop(ConfirmSignOut.CANCEL);
+              },
+            ),
+            FlatButton(
+              child: const Text('YES', style: TextStyle(fontSize: 18)),
+              onPressed: () {
+                Navigator.of(context).pop(ConfirmSignOut
+                    .CONFIRM); // Will later be changed to redirect to logout
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _signoutContent(
+      String socialMediaName, String socialMediaImagePath, double imageScale) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Are you sure you want to sign out of $socialMediaName?',
+            style: TextStyle(fontSize: 20),
+          ),
+          Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.04),
+          CircleAvatar(
+            backgroundImage: AssetImage(
+                socialMediaImagePath), //scale: imageScale, alignment: Alignment.center),
+            radius: widget.screenWidth * 0.16,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _socialMediaIconHandler(
       String socialMediaName, String socialMediaImagePath, double imageScale) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => AccountInfoScreen(
-                    accountInfo: LoginInfo(
-                      "$socialMediaName Username",
-                      socialMediaName,
-                      socialMediaImagePath,
-                    ),
-                  ))),
-      //child: Image.asset(socialMediaImagePath, scale: imageScale, alignment: Alignment.center),
+      onTap: () => _asyncConfirmDialog(
+          context, socialMediaName, socialMediaImagePath, imageScale),
       child: CircleAvatar(
         backgroundImage: AssetImage(
             socialMediaImagePath), //scale: imageScale, alignment: Alignment.center),
