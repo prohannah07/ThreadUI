@@ -80,31 +80,27 @@ class Home extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(20),
                 child: GestureDetector(
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => NewPage())),
                   child: Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 255, 255, 0.5),
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: ThreadColorPalette.red2,
-                          spreadRadius: 0.5,
-                          blurRadius: 2,
-                          offset: Offset(1, 6),
+                    ),
+                    height: 65,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          size: 45,
                         ),
                       ],
                     ),
-                    height: 50,
-                    width: double.infinity,
-                    child: Text("Start Your Search",
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: ThreadColorPalette.red1,
-                            fontWeight: FontWeight.bold)),
                   ),
                 ))
 
@@ -125,12 +121,6 @@ class Home extends StatelessWidget {
             //     ),
             //   ),
             // )
-
-            // RaisedButton(
-            //     color: Colors.white,
-            //     child: Text("Click me"),
-            //     onPressed: () => Navigator.push(context,
-            //         MaterialPageRoute(builder: (context) => NewPage())))
 
             // Container(
             //     height: 120,

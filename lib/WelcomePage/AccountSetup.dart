@@ -3,9 +3,9 @@ import '../colorPallete/ThreadColorPallete.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';
 import '../tabs/testing/testingSearch.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_twitter/flutter_twitter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class AccountSetup extends StatefulWidget {
   @override
@@ -23,6 +23,86 @@ class _AccountSetupState extends State<AccountSetup> {
   ];
   List socialMediaNames = ["Twitter", "Facebook", "Instagram"];
   double imageScale = 20.0;
+
+  // Twitter Login Info
+  String twitterToken;
+  String twitterTokenSecret;
+
+  final twitterLogin = new TwitterLogin(
+    consumerKey: 'puT5M56zTfzZEdXf8uxxCFDEL',
+    consumerSecret: 'PDxCggP1ttRifM4rHz7Bbv5X3UhPxe3GCC1vgAFSolJJiPnxTS',
+  );
+
+  //
+
+  Widget _twitterLoginButton() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      width: screenWidth * 0.9,
+      height: screenHeight * 0.1,
+      child: RaisedButton(
+        color: Colors.white,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
+        onPressed: () async {
+          final TwitterLoginResult result = await twitterLogin.authorize();
+
+          switch (result.status) {
+            case TwitterLoginStatus.loggedIn:
+              var session = result.session;
+              twitterToken = session.token;
+              twitterTokenSecret = session.secret;
+              var response = await http.post(
+                "http://10.0.2.2:8080/twitter/login",
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: jsonEncode(
+                  <String, String>{
+                    'key': twitterLogin.consumerKey,
+                    'keySecret': twitterLogin.consumerSecret,
+                    'token': twitterToken,
+                    'tokenSecret': twitterTokenSecret,
+                  },
+                ),
+              );
+              break;
+            case TwitterLoginStatus.cancelledByUser:
+              print("Cancelled");
+              break;
+            case TwitterLoginStatus.error:
+              print("Error");
+              break;
+          }
+        },
+        child: Row(
+          children: <Widget>[
+            CircleAvatar(
+              backgroundImage: new AssetImage(socialMediaLogos[
+                  0]), //scale: imageScale, alignment: Alignment.center),
+              radius: imageScale,
+            ),
+            Container(height: screenHeight * 0.014, width: screenWidth * 0.05),
+            RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 28.0,
+                  color: Colors.black,
+                ),
+                children: <TextSpan>[
+                  TextSpan(text: "Sign in to "),
+                  TextSpan(
+                      text: "Twitter",
+                      style: TextStyle(fontWeight: FontWeight.bold))
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _accountLoginTitle() {
     return Text(
@@ -52,55 +132,55 @@ class _AccountSetupState extends State<AccountSetup> {
       height: screenHeight * 0.1,
       child: ButtonTheme(
         child: RaisedButton(
-          color: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
-          child: Row(
-            children: <Widget>[
-              CircleAvatar(
-                backgroundImage: new AssetImage(
-                    socialMediaImagePath), //scale: imageScale, alignment: Alignment.center),
-                radius: imageScale,
-              ),
-              Container(
-                  height: screenHeight * 0.014, width: screenWidth * 0.05),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(text: "Sign in to "),
-                    TextSpan(
-                        text: "$socialMediaName",
-                        style: TextStyle(fontWeight: FontWeight.bold))
-                  ],
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40.0)),
+            child: Row(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: new AssetImage(
+                      socialMediaImagePath), //scale: imageScale, alignment: Alignment.center),
+                  radius: imageScale,
                 ),
-              ),
-            ],
-          ),
-          //onPressed: () {}
+                Container(
+                    height: screenHeight * 0.014, width: screenWidth * 0.05),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 28.0,
+                      color: Colors.black,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(text: "Sign in to "),
+                      TextSpan(
+                          text: "$socialMediaName",
+                          style: TextStyle(fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            onPressed: () {}
 
-          onPressed: () async {
-            //http.get();
-            String socialMedia =
-                socialMediaName[0].toLowerCase() + socialMediaName.substring(1);
-            //Future<http.Response> response =  http.get('http://10.0.2.2:8080/twitter/search?q=covid');
-            //print(response.then((textResult) {print(textResult.body);}));
-            //print(response.then((textResult) {print(textResult.body.runtimeType);}));
-            String loginEndPoint =
-                "http://10.0.2.2:8080/" + socialMedia + "/login";
-            print(loginEndPoint);
-            //Future<http.Response> response = http.get(loginEndPoint);
-            if (await canLaunch(loginEndPoint)) {
-              var launchURL = await launch(loginEndPoint);
-              print("launchURL: $launchURL");
-            } else {
-              throw 'Could not launch $loginEndPoint';
-            }
-          },
-        ),
+            // onPressed: () async {
+            //   //http.get();
+            //   String socialMedia =
+            //       socialMediaName[0].toLowerCase() + socialMediaName.substring(1);
+            //   //Future<http.Response> response =  http.get('http://10.0.2.2:8080/twitter/search?q=covid');
+            //   //print(response.then((textResult) {print(textResult.body);}));
+            //   //print(response.then((textResult) {print(textResult.body.runtimeType);}));
+            //   String loginEndPoint =
+            //       "http://10.0.2.2:8080/" + socialMedia + "/login";
+            //   print(loginEndPoint);
+            //   //Future<http.Response> response = http.get(loginEndPoint);
+            //   if (await canLaunch(loginEndPoint)) {
+            //     var launchURL = await launch(loginEndPoint);
+            //     print("launchURL: $launchURL");
+            //   } else {
+            //     throw 'Could not launch $loginEndPoint';
+            //   }
+            // },
+            ),
       ),
     );
   }
@@ -108,8 +188,9 @@ class _AccountSetupState extends State<AccountSetup> {
   List<Widget> _addLoginButtons(screenWidth, screenHeight) {
     List<Widget> appsUsed = List<Widget>();
     if (!hasTwitterAccount) {
-      appsUsed
-          .add(_accountSignInButton(socialMediaNames[0], socialMediaLogos[0]));
+      appsUsed.add(_twitterLoginButton());
+      // appsUsed
+      //     .add(_accountSignInButton(socialMediaNames[0], socialMediaLogos[0]));
       appsUsed.add(Container(height: 10.0, width: double.infinity));
     }
     if (!hasFacebookAccount) {
