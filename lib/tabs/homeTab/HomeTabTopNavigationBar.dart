@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import '../../colorPallete/ThreadColorPallete.dart';
 
 import '.././topTabBarPages/TabBarPage.dart';
+import '.././topTabBarPages/FetchTabBarTest.dart';
 import './TopNavSearchBar.dart';
 
+import 'package:provider/provider.dart';
+import './../../GlobalState.dart';
 /*
 Do not have a search bar
 */
@@ -121,9 +124,13 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
     return TabBarView(
       controller: _tabController,
       children: [
-        TabBarPage(
-          tab: "all",
+        ChangeNotifierProvider(
+          create: (_) => SearchQueries(),
+          child: APITestHome(),
         ),
+        // TabBarPage(
+        //   tab: "all",
+        // ),
         TabBarPage(
           tab: "twitter",
         ),
@@ -170,7 +177,10 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
             iconSize: 30,
           ),
         ),
-        TopNavSearchBar(searchFocusNode: myFocusNode),
+        ChangeNotifierProvider(
+          create: (_) => SearchQueries(),
+          child: TopNavSearchBar(searchFocusNode: myFocusNode),
+        ),
         Container(
           width: 35,
           height: 25,

@@ -25,7 +25,9 @@ class SMMoreDetailsPage extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 5.0),
       child: CircleAvatar(
+        // backgroundImage: AssetImage(imagePath),
         backgroundImage: AssetImage(imagePath),
+        // backgroundImage: Image.network(imagePath),
         radius: 10.0,
       ),
     );

@@ -26,17 +26,23 @@ class SMPostDetails extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: 5.0),
       child: CircleAvatar(
-        backgroundImage: AssetImage(imagePath),
+        // backgroundImage: AssetImage(imagePath),
+        backgroundImage: NetworkImage(imagePath),
         radius: 25.0,
       ),
     );
   }
 
   Widget _getUserName() {
+    var nameLen = name.length;
+    var finalName = name;
+    if (nameLen > 10){
+      finalName = name.substring(0,10) + "...";
+    }
     return Padding(
       padding: EdgeInsets.only(right: 2.0),
       child: Text(
-        name,
+        finalName,
         style: TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.bold,
