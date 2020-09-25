@@ -3,6 +3,7 @@ import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import '../../colorPallete/ThreadColorPallete.dart';
 import 'dummyPage.dart';
+import '../settingsTab/SettingsTab.dart';
 
 void main() => runApp(Searchbar());
 
@@ -14,6 +15,12 @@ class Post {
 }
 
 class Searchbar extends StatelessWidget {
+  final changeLoginStatus;
+  final returnLoginStatus;
+
+  Searchbar({Key key, this.changeLoginStatus, this.returnLoginStatus})
+      : super(key: key);
+
   Future<List<Post>> search(String search) async {
     await Future.delayed(Duration(seconds: 2));
     return List.generate(5, (int index) {
@@ -25,6 +32,7 @@ class Searchbar extends StatelessWidget {
   }
   //search.length vs set number of results, refer to line 16
 
+  // ignore: unused_element
   Widget _searchBar() {
     return SafeArea(
       child: Padding(
@@ -49,14 +57,34 @@ class Searchbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home());
+    return MaterialApp(
+        home: Home(
+            changeLoginStatus: changeLoginStatus,
+            returnLoginStatus: returnLoginStatus));
   }
 }
 
 class Home extends StatelessWidget {
+  final changeLoginStatus;
+  final returnLoginStatus;
+
+  Home({Key key, this.changeLoginStatus, this.returnLoginStatus})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.settings, size: 30),
+          backgroundColor: ThreadColorPalette.red1,
+          onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SettingsTab(
+                  changeLoginStatus: changeLoginStatus,
+                  returnLoginStatus: returnLoginStatus,
+                ),
+              ))),
       backgroundColor: Colors.white,
       body: Container(
         height: double.infinity,
@@ -80,53 +108,30 @@ class Home extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.all(20),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewPage())),
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    height: 65,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 45,
-                        ),
-                      ],
-                    ),
+              padding: EdgeInsets.all(20),
+              child: GestureDetector(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewPage())),
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 255, 255, 0.5),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
-                ))
-
-            // SafeArea(
-            //   child: Padding(
-            //     padding: EdgeInsets.all(10.0),
-            //     child: TextFormField(
-            //       onTap: () => Navigator.push(context,
-            //           MaterialPageRoute(builder: (context) => NewPage())),
-            //       decoration: InputDecoration(
-            //         prefixIcon:
-            //             Icon(Icons.search, color: Colors.white, size: 40),
-            //         hintText: "Start Your Siracha",
-            //         filled: true,
-            //         fillColor: Color.fromRGBO(255, 255, 255, 0.5),
-            //         contentPadding: const EdgeInsets.all(25.0),
-            //       ),
-            //     ),
-            //   ),
-            // )
-
-            // Container(
-            //     height: 120,
-            //     width: double.infinity,
-            //     alignment: Alignment.bottomCenter,
-            //     child: _searchBar()),
+                  height: 65,
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 45,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

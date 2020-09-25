@@ -5,17 +5,22 @@ import 'dart:async';
 import 'dart:convert';
 import '../tabs/testing/testingSearch.dart';
 import 'package:flutter_twitter/flutter_twitter.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+// ignore: unused_import
 import 'package:webview_flutter/webview_flutter.dart';
 
 class AccountSetup extends StatefulWidget {
+  final changeLoginStatus;
+  final returnLoginStatus;
+
+  AccountSetup({Key key, this.changeLoginStatus, this.returnLoginStatus})
+      : super(key: key);
+
   @override
   _AccountSetupState createState() => _AccountSetupState();
 }
 
 class _AccountSetupState extends State<AccountSetup> {
-  bool hasTwitterAccount = false;
-  bool hasFacebookAccount = false;
-  bool hasInstagramAccount = false;
   List socialMediaLogos = [
     "assets/socialMediaIcons/png/twitter.png",
     "assets/socialMediaIcons/png/facebook_logo.png",
@@ -24,16 +29,75 @@ class _AccountSetupState extends State<AccountSetup> {
   List socialMediaNames = ["Twitter", "Facebook", "Instagram"];
   double imageScale = 20.0;
 
+  // Facebook Login Info
+
+  static final FacebookLogin facebookSignIn = new FacebookLogin();
+
+  Widget _facebookLoginButton() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      width: screenWidth * 0.9,
+      height: screenHeight * 0.1,
+      child: RaisedButton(
+          color: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
+          onPressed: () async {
+            facebookSignIn.loginBehavior = FacebookLoginBehavior.webViewOnly;
+            final FacebookLoginResult result =
+                await facebookSignIn.logIn(['email']);
+
+            switch (result.status) {
+              case FacebookLoginStatus.loggedIn:
+                final FacebookAccessToken accessToken = result.accessToken;
+                print("Facebook Access Token: ${accessToken.token}");
+                widget.changeLoginStatus(true, socialMediaNames[1]);
+                break;
+              case FacebookLoginStatus.cancelledByUser:
+                print("Cancelled");
+                break;
+              case FacebookLoginStatus.error:
+                print("Error");
+                break;
+            }
+          },
+          child: Row(
+            children: <Widget>[
+              CircleAvatar(
+                backgroundImage: new AssetImage(socialMediaLogos[
+                    1]), //scale: imageScale, alignment: Alignment.center),
+                radius: imageScale,
+              ),
+              Container(
+                  height: screenHeight * 0.014, width: screenWidth * 0.05),
+              RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    color: Colors.black,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(text: "Sign in to "),
+                    TextSpan(
+                        text: "Facebook",
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ],
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+
   // Twitter Login Info
   String twitterToken;
   String twitterTokenSecret;
 
   final twitterLogin = new TwitterLogin(
-    consumerKey: 'puT5M56zTfzZEdXf8uxxCFDEL',
-    consumerSecret: 'PDxCggP1ttRifM4rHz7Bbv5X3UhPxe3GCC1vgAFSolJJiPnxTS',
+    consumerKey: 'sCAgOQq0DPe6OWSxTrEMpFEkc',
+    consumerSecret: 'slAbLRO2HnfmUfhDGSD1wCDXLI8iwJBRo3qHa4jMxop7vPtBVL',
   );
-
-  //
 
   Widget _twitterLoginButton() {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -50,9 +114,14 @@ class _AccountSetupState extends State<AccountSetup> {
 
           switch (result.status) {
             case TwitterLoginStatus.loggedIn:
+              // Change login status of Twitter to true
+              widget.changeLoginStatus(true, socialMediaNames[0]);
+              print(
+                  "Login Status of Twitter: ${widget.returnLoginStatus("Twitter")}");
               var session = result.session;
               twitterToken = session.token;
               twitterTokenSecret = session.secret;
+              // ignore: unused_local_variable
               var response = await http.post(
                 "http://10.0.2.2:8080/twitter/login",
                 headers: <String, String>{
@@ -187,18 +256,19 @@ class _AccountSetupState extends State<AccountSetup> {
 
   List<Widget> _addLoginButtons(screenWidth, screenHeight) {
     List<Widget> appsUsed = List<Widget>();
-    if (!hasTwitterAccount) {
+    if (!widget.returnLoginStatus("Twitter")) {
       appsUsed.add(_twitterLoginButton());
       // appsUsed
       //     .add(_accountSignInButton(socialMediaNames[0], socialMediaLogos[0]));
       appsUsed.add(Container(height: 10.0, width: double.infinity));
     }
-    if (!hasFacebookAccount) {
-      appsUsed
-          .add(_accountSignInButton(socialMediaNames[1], socialMediaLogos[1]));
+    if (!widget.returnLoginStatus("Facebook")) {
+      appsUsed.add(_facebookLoginButton()); // Uncomment later
+      // appsUsed
+      //     .add(_accountSignInButton(socialMediaNames[1], socialMediaLogos[1]));
       appsUsed.add(Container(height: 10.0, width: double.infinity));
     }
-    if (!hasInstagramAccount) {
+    if (!widget.returnLoginStatus("Instagram")) {
       appsUsed
           .add(_accountSignInButton(socialMediaNames[2], socialMediaLogos[2]));
       appsUsed.add(Container(height: 10.0, width: double.infinity));
@@ -214,7 +284,9 @@ class _AccountSetupState extends State<AccountSetup> {
     //         }),
     //   );
     // }
-    if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount) {
+    if (widget.returnLoginStatus("Twitter") ||
+        widget.returnLoginStatus("Facebook") ||
+        widget.returnLoginStatus("Instagram")) {
       double paddingVal = screenHeight * 0.2;
 
       Widget finishButton = Padding(
@@ -238,8 +310,10 @@ class _AccountSetupState extends State<AccountSetup> {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            Searchbar())), // Should redirect to primary search screen
+                        builder: (context) => Searchbar(
+                              changeLoginStatus: widget.changeLoginStatus,
+                              returnLoginStatus: widget.returnLoginStatus,
+                            ))), // Should redirect to primary search screen
               ))));
       appsUsed.add(finishButton);
     }
@@ -247,7 +321,9 @@ class _AccountSetupState extends State<AccountSetup> {
   }
 
   Widget _formatButtons(screenWidth, screenHeight) {
-    if (hasTwitterAccount || hasFacebookAccount || hasInstagramAccount) {
+    if (widget.returnLoginStatus("Twitter") ||
+        widget.returnLoginStatus("Facebook") ||
+        widget.returnLoginStatus("Instagram")) {
       // Has at least 1 account --> Allow users to commplete setup
       return Column(
         children: <Widget>[
@@ -311,7 +387,8 @@ class _AccountSetupState extends State<AccountSetup> {
             fit: BoxFit.fill,
           ),
         ),
-        child: _formatButtons(screenWidth, screenHeight),
+        child: SingleChildScrollView(
+            child: _formatButtons(screenWidth, screenHeight)),
       ),
     );
   }

@@ -2,28 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../.././colorPallete/ThreadColorPallete.dart';
 
-// ignore: must_be_immutable
 class AddAccount extends StatefulWidget {
-  List imageScales = [1.62, 1.6, 4.1];
-  List accountNames = ["Twitter", "Facebook", "Instagram"];
-  List socialMediaLogos = [
-    "assets/socialMediaIcons/png/twitter.png",
-    "assets/socialMediaIcons/png/facebook_logo.png",
-    "assets/socialMediaIcons/png/instagram_logo.png"
-  ];
-  bool hasTwitterAccount;
-  bool hasFacebookAccount;
-  bool hasInstagramAccount;
-  double screenHeight;
-  double screenWidth;
+  final screenHeight;
+  final screenWidth;
+  final changeLoginStatus;
+  final returnLoginStatus;
 
   AddAccount(
-      {@required this.hasTwitterAccount,
-      this.hasFacebookAccount,
-      this.hasInstagramAccount,
+      {Key key,
+      this.changeLoginStatus,
+      this.returnLoginStatus,
       this.screenHeight,
-      this.screenWidth,
-      Key key})
+      this.screenWidth})
       : super(key: key);
 
   @override
@@ -31,6 +21,14 @@ class AddAccount extends StatefulWidget {
 }
 
 class _AddAccountState extends State<AddAccount> {
+  List imageScales = [1.62, 1.6, 4.1];
+  List accountNames = ["Twitter", "Facebook", "Instagram"];
+  List socialMediaLogos = [
+    "assets/socialMediaIcons/png/twitter.png",
+    "assets/socialMediaIcons/png/facebook_logo.png",
+    "assets/socialMediaIcons/png/instagram_logo.png"
+  ];
+
   Widget _socialMediaIconHandler(
       String socialMediaName, String socialMediaImagePath, double imageScale) {
     return GestureDetector(
@@ -55,25 +53,25 @@ class _AddAccountState extends State<AddAccount> {
 
   List<Widget> _formatApps() {
     List<Widget> appsUsed = List<Widget>();
-    if (!widget.hasTwitterAccount) {
-      appsUsed.add(_socialMediaIconHandler(widget.accountNames[0],
-          widget.socialMediaLogos[0], widget.imageScales[0]));
+    if (!widget.returnLoginStatus(accountNames[0])) {
+      appsUsed.add(_socialMediaIconHandler(
+          accountNames[0], socialMediaLogos[0], imageScales[0]));
     }
-    if (!widget.hasFacebookAccount) {
-      appsUsed.add(_socialMediaIconHandler(widget.accountNames[1],
-          widget.socialMediaLogos[1], widget.imageScales[1]));
+    if (!widget.returnLoginStatus(accountNames[1])) {
+      appsUsed.add(_socialMediaIconHandler(
+          accountNames[1], socialMediaLogos[1], imageScales[1]));
     }
-    if (!widget.hasInstagramAccount) {
-      appsUsed.add(_socialMediaIconHandler(widget.accountNames[2],
-          widget.socialMediaLogos[2], widget.imageScales[2]));
+    if (!widget.returnLoginStatus(accountNames[2])) {
+      appsUsed.add(_socialMediaIconHandler(
+          accountNames[2], socialMediaLogos[2], imageScales[2]));
     }
     return appsUsed;
   }
 
   Widget _displayApps() {
-    if (!widget.hasTwitterAccount &&
-        !widget.hasFacebookAccount &&
-        !widget.hasInstagramAccount) {
+    if (!widget.returnLoginStatus(accountNames[0]) &&
+        !widget.returnLoginStatus(accountNames[1]) &&
+        !widget.returnLoginStatus(accountNames[2])) {
       return Container(
         height: widget.screenHeight * 0.25,
         width: double.infinity,
@@ -82,9 +80,9 @@ class _AddAccountState extends State<AddAccount> {
           children: _formatApps(),
         ),
       );
-    } else if (widget.hasTwitterAccount &&
-        widget.hasFacebookAccount &&
-        widget.hasInstagramAccount) {
+    } else if (widget.returnLoginStatus(accountNames[0]) &&
+        widget.returnLoginStatus(accountNames[1]) &&
+        widget.returnLoginStatus(accountNames[2])) {
       return Container(
         height: widget.screenHeight * 0.25,
         width: double.infinity,

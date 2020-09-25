@@ -5,16 +5,18 @@ import './tabs/homeTab/HomeTab.dart';
 import './tabs/searchTab/SearchTab.dart';
 import './tabs/settingsTab/SettingsTab.dart';
 
-class ThreadBottomNavigationBar extends StatefulWidget{
+class ThreadBottomNavigationBar extends StatefulWidget {
   ThreadBottomNavigationBar({Key key}) : super(key: key);
 
   @override
-  _ThreadBottomNavigationBarState createState() => _ThreadBottomNavigationBarState();
+  _ThreadBottomNavigationBarState createState() =>
+      _ThreadBottomNavigationBarState();
 }
 
-class _ThreadBottomNavigationBarState extends State<ThreadBottomNavigationBar>{
+class _ThreadBottomNavigationBarState extends State<ThreadBottomNavigationBar> {
   int _selectedIndex = 0;
 
+  // ignore: unused_field
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
@@ -40,18 +42,24 @@ class _ThreadBottomNavigationBarState extends State<ThreadBottomNavigationBar>{
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             // icon: Icon(Icons.home),
-            activeIcon: ImageIcon(AssetImage("assets/bottomNavBarIcons/png/home.png")),
-            icon: ImageIcon(AssetImage("assets/bottomNavBarIcons/png/home-outline.png")),
+            activeIcon:
+                ImageIcon(AssetImage("assets/bottomNavBarIcons/png/home.png")),
+            icon: ImageIcon(
+                AssetImage("assets/bottomNavBarIcons/png/home-outline.png")),
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            activeIcon: ImageIcon(AssetImage("assets/bottomNavBarIcons/png/search.png")),
-            icon: ImageIcon(AssetImage("assets/bottomNavBarIcons/png/search-outline.png")),
+            activeIcon: ImageIcon(
+                AssetImage("assets/bottomNavBarIcons/png/search.png")),
+            icon: ImageIcon(
+                AssetImage("assets/bottomNavBarIcons/png/search-outline.png")),
             title: Text('Search'),
           ),
           BottomNavigationBarItem(
-            activeIcon: ImageIcon(AssetImage("assets/bottomNavBarIcons/png/settings.png")),
-            icon: ImageIcon(AssetImage("assets/bottomNavBarIcons/png/settings-outline.png")),
+            activeIcon: ImageIcon(
+                AssetImage("assets/bottomNavBarIcons/png/settings.png")),
+            icon: ImageIcon(AssetImage(
+                "assets/bottomNavBarIcons/png/settings-outline.png")),
             title: Text('Settings'),
           ),
         ],

@@ -5,18 +5,24 @@ import 'AccountSetup.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 // Runs outside of main App for testing purposes
-void main() => runApp(MyApp());
+// void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: WelcomeScreen(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: WelcomeScreen(),
+//     );
+//   }
+// }
 
 class WelcomeScreen extends StatelessWidget {
+  final changeLoginStatus;
+  final returnLoginStatus;
+
+  WelcomeScreen({Key key, this.changeLoginStatus, this.returnLoginStatus})
+      : super(key: key);
+
   Widget _threadTitle() {
     return Text(
       "Welcome to Thread!",
@@ -90,8 +96,13 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
           color: Colors.white,
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AccountSetup()))),
+          onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AccountSetup(
+                        changeLoginStatus: changeLoginStatus,
+                        returnLoginStatus: returnLoginStatus,
+                      )))),
     );
   }
 

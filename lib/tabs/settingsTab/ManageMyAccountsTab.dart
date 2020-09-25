@@ -5,18 +5,29 @@ import '../../colorPallete/ThreadColorPallete.dart';
 import 'RemoveAccount.dart';
 import 'AddAccount.dart';
 
-// ignore: must_be_immutable
-class ManageMyAccounts extends StatelessWidget {
-  bool hasTwitterAccount = true;
-  bool hasFacebookAccount = true;
-  bool hasInstagramAccount = true;
+class ManageMyAccounts extends StatefulWidget {
+  final changeLoginStatus;
+  final returnLoginStatus;
+
+  ManageMyAccounts({Key key, this.changeLoginStatus, this.returnLoginStatus})
+      : super(key: key);
+
+  @override
+  _ManageMyAccountsState createState() => _ManageMyAccountsState();
+}
+
+class _ManageMyAccountsState extends State<ManageMyAccounts> {
+  List accountNames = ["Twitter", "Facebook", "Instagram"];
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    bool _loggedIntoAllAccounts =
-        (hasTwitterAccount && hasFacebookAccount && hasInstagramAccount);
+    bool _loggedIntoAllAccounts = (widget.returnLoginStatus(accountNames[0]) &&
+        widget.returnLoginStatus(accountNames[1]) &&
+        widget.returnLoginStatus(accountNames[2]));
+
+    print("Logged into all accounts: $_loggedIntoAllAccounts");
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,10 +59,10 @@ class ManageMyAccounts extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AddAccount(
-                                        hasTwitterAccount: hasTwitterAccount,
-                                        hasFacebookAccount: hasFacebookAccount,
-                                        hasInstagramAccount:
-                                            hasInstagramAccount,
+                                        changeLoginStatus:
+                                            widget.changeLoginStatus,
+                                        returnLoginStatus:
+                                            widget.returnLoginStatus,
                                         screenHeight: screenHeight,
                                         screenWidth: screenWidth,
                                       )));
@@ -73,9 +84,8 @@ class ManageMyAccounts extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => RemoveAccount(
-                                  hasTwitterAccount: hasTwitterAccount,
-                                  hasFacebookAccount: hasFacebookAccount,
-                                  hasInstagramAccount: hasInstagramAccount,
+                                  changeLoginStatus: widget.changeLoginStatus,
+                                  returnLoginStatus: widget.returnLoginStatus,
                                   screenHeight: screenHeight,
                                   screenWidth: screenWidth,
                                 ))),

@@ -6,7 +6,18 @@ import 'PrivacyAndSecurity.dart';
 import 'TermsAndServices.dart';
 import 'AboutPage.dart';
 
-class SettingsTab extends StatelessWidget {
+class SettingsTab extends StatefulWidget {
+  final changeLoginStatus;
+  final returnLoginStatus;
+
+  SettingsTab({Key key, this.changeLoginStatus, this.returnLoginStatus})
+      : super(key: key);
+
+  @override
+  _SettingsTabState createState() => _SettingsTabState();
+}
+
+class _SettingsTabState extends State<SettingsTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +47,10 @@ class SettingsTab extends StatelessWidget {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ManageMyAccounts())),
+                            builder: (context) => ManageMyAccounts(
+                                  changeLoginStatus: widget.changeLoginStatus,
+                                  returnLoginStatus: widget.returnLoginStatus,
+                                ))),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
