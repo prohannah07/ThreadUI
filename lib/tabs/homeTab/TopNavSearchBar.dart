@@ -8,8 +8,9 @@ import 'dart:convert';
 class TopNavSearchBar extends StatefulWidget {
   final bool focus;
   FocusNode searchFocusNode;
+  final parentQueryFunction;
 
-  TopNavSearchBar({this.focus, this.searchFocusNode});
+  TopNavSearchBar({this.focus, this.searchFocusNode, this.parentQueryFunction});
 
   @override
   _TopNavSearchBarState createState() => _TopNavSearchBarState();
@@ -19,24 +20,24 @@ class _TopNavSearchBarState extends State<TopNavSearchBar> {
   final textController = TextEditingController();
   FocusNode myFocusNode;
 
-  final String apiUrl = "http://10.0.2.2:8080/twitter/search?q=";
-  Future<List<dynamic>> fetchUsers(q) async {
-    var result = await http.get(apiUrl + q);
+  // final String apiUrl = "http://10.0.2.2:8080/twitter/search?q=";
+  // Future<List<dynamic>> fetchUsers(q) async {
+  //   var result = await http.get(apiUrl + q);
 
-    if (result.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      print("status is 200! yeet");
-      // print(result.body);
-      // return Album.fromJson(json.decode(response.body));
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
-    }
+  //   if (result.statusCode == 200) {
+  //     // If the server did return a 200 OK response,
+  //     // then parse the JSON.
+  //     print("status is 200! yeet");
+  //     // print(result.body);
+  //     // return Album.fromJson(json.decode(response.body));
+  //   } else {
+  //     // If the server did not return a 200 OK response,
+  //     // then throw an exception.
+  //     throw Exception('Failed to load album');
+  //   }
 
-    return json.decode(result.body);
-  }
+  //   return json.decode(result.body);
+  // }
 
   @override
   void initState() {
@@ -70,12 +71,13 @@ class _TopNavSearchBarState extends State<TopNavSearchBar> {
       textInputAction: TextInputAction.search,
       onSubmitted: (value){
         print("search!! YEET!");
-        myFocusNode.unfocus();
+        // myFocusNode.unfocus();
         print(textController.text);
+        widget.parentQueryFunction(textController.text);
         // Provider.of<SearchQueries>(context).changeQuery(textController.text);
-        context.read<SearchQueries>().changeQuery(textController.text);
+        // context.read<SearchQueries>().changeQuery(textController.text);
         textController.clear();
-        print("ON PROVIDER: " +context.read<SearchQueries>().query["searchQuery"]);
+        // print("ON PROVIDER: " +context.read<SearchQueries>().query["searchQuery"]);
         
       },
       style: TextStyle(decoration: TextDecoration.none),

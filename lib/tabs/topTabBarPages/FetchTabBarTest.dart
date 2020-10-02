@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../colorPallete/ThreadColorPallete.dart';
 import './socialMediaPostWidgets/SMPostCard.dart';
-import './../../GlobalState.dart';
 
+//FetchTabBarTwitter
+class FetchTabBarTwitter extends StatefulWidget {
+  String finalQuery;
 
-class APITestHome extends StatefulWidget {
+  FetchTabBarTwitter({this.finalQuery});
 
   @override
-  _APITestHomeState createState() => _APITestHomeState();
+  _FetchTabBarTwitterState createState() => _FetchTabBarTwitterState();
 }
 
-class _APITestHomeState extends State<APITestHome> {
+class _FetchTabBarTwitterState extends State<FetchTabBarTwitter> {
   // final String searchQuery;
   Future<List<dynamic>> fetch;
 
@@ -28,6 +29,7 @@ class _APITestHomeState extends State<APITestHome> {
     if (result.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
+      print("FINAL QUERY: " + widget.finalQuery);
       print("status is 200! yeet");
       // print(result.body);
       // return Album.fromJson(json.decode(response.body));
@@ -81,10 +83,8 @@ class _APITestHomeState extends State<APITestHome> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Consumer<SearchQueries>(
-        builder: (context, sq, child) {
-          return FutureBuilder<List<dynamic>>(
-            future: fetchUsers(sq.query["searchQuery"]),
+      child: FutureBuilder<List<dynamic>>(
+            future: fetchUsers(widget.finalQuery),
                 // fetchUsers(context.watch<SearchQueries>().query["searchQuery"]),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -112,9 +112,7 @@ class _APITestHomeState extends State<APITestHome> {
                 return Center(child: CircularProgressIndicator());
               }
             },
-          );
-        },
-      ),
-    );
+          ),
+      );
   }
 }

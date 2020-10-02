@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 import '../../colorPallete/ThreadColorPallete.dart';
 
 import '.././topTabBarPages/TabBarPage.dart';
 import '.././topTabBarPages/FetchTabBarTest.dart';
 import './TopNavSearchBar.dart';
-
-import 'package:provider/provider.dart';
-import './../../GlobalState.dart';
-/*
-Do not have a search bar
-*/
 
 class HomeTabTopNavigationBar extends StatefulWidget {
   @override
@@ -24,6 +17,7 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
   TabController _tabController;
   int _currentIndex = 0;
   FocusNode myFocusNode;
+  String query = "twice";
 
   @override
   void initState() {
@@ -47,6 +41,13 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
   void _handleTabSelection() {
     setState(() {
       _currentIndex = _tabController.index;
+    });
+  }
+
+  void _changeQuery(String newQuery){
+    setState(() {
+      print("Old query: $query");
+      query = newQuery;
     });
   }
 
@@ -124,10 +125,11 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
     return TabBarView(
       controller: _tabController,
       children: [
-        ChangeNotifierProvider(
-          create: (_) => SearchQueries(),
-          child: APITestHome(),
-        ),
+        FetchTabBarTwitter(finalQuery: query),
+        // ChangeNotifierProvider(
+        //   create: (_) => SearchQueries(),
+        //   child: APITestHome(),
+        // ),
         // TabBarPage(
         //   tab: "all",
         // ),
@@ -177,10 +179,11 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
             iconSize: 30,
           ),
         ),
-        ChangeNotifierProvider(
-          create: (_) => SearchQueries(),
-          child: TopNavSearchBar(searchFocusNode: myFocusNode),
-        ),
+        TopNavSearchBar(searchFocusNode: myFocusNode, parentQueryFunction: _changeQuery),
+        // ChangeNotifierProvider(
+        //   create: (_) => SearchQueries(),
+        //   child: TopNavSearchBar(searchFocusNode: myFocusNode),
+        // ),
         Container(
           width: 35,
           height: 25,
