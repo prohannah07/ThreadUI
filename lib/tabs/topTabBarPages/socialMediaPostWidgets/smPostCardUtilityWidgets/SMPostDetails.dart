@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './SMPostImageCarousel.dart';
 import './SMPostInteractions.dart';
 
+
 class SMPostDetails extends StatelessWidget {
   final String imagePath;
   final String name;

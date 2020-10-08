@@ -17,6 +17,8 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
   TabController _tabController;
   int _currentIndex = 0;
   FocusNode myFocusNode;
+  String prevQuery = "bts";
+  String currQuery = "twice";
   String query = "twice";
 
   @override
@@ -48,6 +50,14 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
     setState(() {
       print("Old query: $query");
       query = newQuery;
+    });
+  }
+
+  void _changeQuery2(String newQuery){
+    setState(() {
+      print("Old query: $prevQuery");
+      prevQuery = currQuery;
+      currQuery = newQuery;
     });
   }
 
@@ -125,7 +135,7 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
     return TabBarView(
       controller: _tabController,
       children: [
-        FetchTabBarTwitter(finalQuery: query),
+        FetchTabBarTwitter(finalQuery: query, prevQuery: prevQuery, currQuery: currQuery,),
         // ChangeNotifierProvider(
         //   create: (_) => SearchQueries(),
         //   child: APITestHome(),
@@ -179,7 +189,7 @@ class _HomeTabTopNavigationBarState extends State<HomeTabTopNavigationBar>
             iconSize: 30,
           ),
         ),
-        TopNavSearchBar(searchFocusNode: myFocusNode, parentQueryFunction: _changeQuery),
+        TopNavSearchBar(searchFocusNode: myFocusNode, parentQueryFunction: _changeQuery2),
         // ChangeNotifierProvider(
         //   create: (_) => SearchQueries(),
         //   child: TopNavSearchBar(searchFocusNode: myFocusNode),

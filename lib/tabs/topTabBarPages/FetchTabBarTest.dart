@@ -8,8 +8,10 @@ import './socialMediaPostWidgets/SMPostCard.dart';
 //FetchTabBarTwitter
 class FetchTabBarTwitter extends StatefulWidget {
   String finalQuery;
+  String prevQuery;
+  String currQuery;
 
-  FetchTabBarTwitter({this.finalQuery});
+  FetchTabBarTwitter({this.finalQuery, this.prevQuery, this.currQuery});
 
   @override
   _FetchTabBarTwitterState createState() => _FetchTabBarTwitterState();
@@ -84,13 +86,13 @@ class _FetchTabBarTwitterState extends State<FetchTabBarTwitter> {
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder<List<dynamic>>(
-            future: fetchUsers(widget.finalQuery),
+            future: fetchUsers(widget.currQuery),
                 // fetchUsers(context.watch<SearchQueries>().query["searchQuery"]),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                // print(_age(snapshot.data[0]));
-                print(snapshot.data.length);
-                print(snapshot.data[0]["user"]["400x400ProfileImageURLHttps"]);
+                print(snapshot.data.length);    
+                print("PREV QUERY FETCH: " + widget.prevQuery);
+                print("CURR QUERY FETCH: " + widget.currQuery);
                 return ListView.separated(
                   // padding: const EdgeInsets.all(8),
                   itemCount: snapshot.data.length,
