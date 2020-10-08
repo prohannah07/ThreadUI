@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ThreadColorPalette {
   ThreadColorPalette._();
 
-  static const Map<int, Color> colorRed1 =
+  static const Map<int, Color> _colorRed1 =
   {
     50:Color.fromRGBO(255,71,71, .1),
     100:Color.fromRGBO(255,71,71, .2),
@@ -17,9 +17,9 @@ class ThreadColorPalette {
     900:Color.fromRGBO(255,71,71, 1),
   };
 
-  static const MaterialColor red1 = MaterialColor(0xFFFF4747, colorRed1);
+  static const MaterialColor red1 = MaterialColor(0xFFFF4747, _colorRed1);
 
-    static const Map<int, Color> colorRed2 =
+    static const Map<int, Color> _colorRed2 =
   {
     50:Color.fromRGBO(143,0,0, .1),
     100:Color.fromRGBO(143,0,0, .2),
@@ -33,5 +33,5 @@ class ThreadColorPalette {
     900:Color.fromRGBO(143,0,0, 1),
   };
 
-  static const MaterialColor red2 = MaterialColor(0xFF8F0000, colorRed2);
+  static const MaterialColor red2 = MaterialColor(0xFF8F0000, _colorRed2);
 }

@@ -58,11 +58,17 @@ flutter:
     - assets/bottomNavBarIcons/png/search-outline.png
     - assets/bottomNavBarIcons/png/settings.png
     - assets/bottomNavBarIcons/png/settings-outline.png
+
     - assets/socialMediaIcons/png/facebook_logo.png
     - assets/socialMediaIcons/png/instagram_logo.png
     - assets/socialMediaIcons/png/twitter.png
     - assets/backgrounds/mainBackground.png
     - assets/backgrounds/welcomeScreenResized.PNG
+
+    - assets/socialMediaIcons/facebook.png
+    - assets/socialMediaIcons/instagram.png
+    - assets/socialMediaIcons/twitter.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
