@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
+
 class SMPostInteractions extends StatefulWidget {
   final bool like;
   final bool share;
   final String socialMedia;
+  final String tweedId;
 
-  SMPostInteractions({this.like = false, this.share = false, this.socialMedia});
+  SMPostInteractions({this.like = false, this.share = false, this.socialMedia, this.tweedId});
 
   @override
   _SMPostInteractionsState createState() => _SMPostInteractionsState();
@@ -23,13 +29,51 @@ class _SMPostInteractionsState extends State<SMPostInteractions> {
     _isShared = widget.share;
   }
 
-  void _toggleLike() {
+  void _toggleLike () {
+    var url = "http://10.0.2.2:8080/twitter/react";
+    Map id = {"id":widget.tweedId};
+    var bodyEn = json.encode(id);
+
+    if (!_isLiked) {
+      http.post(url,
+      headers: {"Content-Type": "application/json"},
+      body: bodyEn
+      );
+      print("liked!");
+    }else if (_isLiked){
+      final finurl = Uri.parse(url);
+      final request = http.Request("DELETE", finurl);
+      request.headers.addAll(<String, String>{"Content-Type": "application/json",});
+      request.body = bodyEn;
+      request.send();
+      print("unliked!");
+    }
+
     setState(() {
       _isLiked = !_isLiked;
     });
   }
 
   void _toggleShare() {
+    var url = "http://10.0.2.2:8080/twitter/share";
+    Map id = {"id":widget.tweedId};
+    var bodyEn = json.encode(id);
+
+    if (!_isShared) {
+      http.post(url,
+      headers: {"Content-Type": "application/json"},
+      body: bodyEn
+      );
+      print("retweeted!");
+    }else if (_isShared){
+      final finurl = Uri.parse(url);
+      final request = http.Request("DELETE", finurl);
+      request.headers.addAll(<String, String>{"Content-Type": "application/json",});
+      request.body = bodyEn;
+      request.send();
+      print("unretweeted!");
+    }
+
     setState(() {
       _isShared = !_isShared;
     });

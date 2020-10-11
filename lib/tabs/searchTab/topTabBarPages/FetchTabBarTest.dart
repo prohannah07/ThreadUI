@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
 
 import '../../../colorPallete/ThreadColorPallete.dart';
 import './socialMediaPostWidgets/SMPostCard.dart';
@@ -89,6 +91,7 @@ class _FetchTabBarTwitterState extends State<FetchTabBarTwitter> {
             future: fetchUsers(widget.currQuery),
                 // fetchUsers(context.watch<SearchQueries>().query["searchQuery"]),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              // var counter = 0;
               if (snapshot.hasData) {
                 print(snapshot.data.length);    
                 print("PREV QUERY FETCH: " + widget.prevQuery);
@@ -105,6 +108,7 @@ class _FetchTabBarTwitterState extends State<FetchTabBarTwitter> {
                       textPost: snapshot.data[i]["retweetedStatus"]==null ? snapshot.data[i]["text"] : snapshot.data[i]["retweetedStatus"]["text"],
                       media: snapshot.data[i]["retweetedStatus"]==null ? (snapshot.data[i]["mediaEntities"].length==0 ? false : true) : (snapshot.data[i]["retweetedStatus"]["mediaEntities"].length==0 ? false : true),
                       imageURLs: _getMedia(snapshot.data[i]["retweetedStatus"]==null ? snapshot.data[i]["mediaEntities"]: snapshot.data[i]["retweetedStatus"]["mediaEntities"]),
+                      tweetId: snapshot.data[i]["retweetedStatus"]==null ? snapshot.data[i]["id"].toString() : snapshot.data[i]["retweetedStatus"]["id"].toString(),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) =>

@@ -12,6 +12,7 @@ class SMPostDetails extends StatelessWidget {
   final String textPost;
   final bool media;
   final List imageURLs;
+  final String tweetId;
 
   SMPostDetails({
     this.imagePath,
@@ -20,7 +21,8 @@ class SMPostDetails extends StatelessWidget {
     this.socialMedia,
     this.textPost,
     this.media,
-    this.imageURLs
+    this.imageURLs,
+    this.tweetId
   });
 
   Widget _getUserImage() {
@@ -130,7 +132,7 @@ class SMPostDetails extends StatelessWidget {
           _buildUserNames(),
           _getUserTextPost(),
           SMPostImageCarousel(imageURLs: imageURLs),
-          SMPostInteractions(socialMedia: socialMedia)
+          SMPostInteractions(socialMedia: socialMedia, like: false, share: false, tweedId: tweetId,)
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
       );
@@ -139,7 +141,7 @@ class SMPostDetails extends StatelessWidget {
       children: <Widget>[
         _buildUserNames(),
         _getUserTextPost(),
-        SMPostInteractions(socialMedia: socialMedia,)
+        SMPostInteractions(socialMedia: socialMedia, like: false, share: false, tweedId: tweetId,)
       ],
       crossAxisAlignment: CrossAxisAlignment.start,
     );
