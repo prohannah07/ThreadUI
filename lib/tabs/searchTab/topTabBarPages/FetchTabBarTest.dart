@@ -26,12 +26,12 @@ class _FetchTabBarTwitterState extends State<FetchTabBarTwitter> {
   final String apiUrl = "http://10.0.2.2:8080/twitter/search?q=";
 
   Future<List<dynamic>> fetchUsers(q) async {
-    var result = await http.get(apiUrl + q);
+    var result = await http.get(apiUrl + Uri.encodeQueryComponent(q));
 
     if (result.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      print("FINAL QUERY: " + widget.finalQuery);
+      print("FINAL QUERY: " + Uri.encodeQueryComponent(q));
       print("status is 200! yeet");
       // print(result.body);
       // return Album.fromJson(json.decode(response.body));
