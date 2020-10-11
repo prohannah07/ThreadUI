@@ -20,6 +20,7 @@ class SMPostInteractions extends StatefulWidget {
 class _SMPostInteractionsState extends State<SMPostInteractions> {
   bool _isLiked;
   bool _isShared;
+  var rtId;
 
   @override
   void initState() {
@@ -38,15 +39,15 @@ class _SMPostInteractionsState extends State<SMPostInteractions> {
       http.post(url,
       headers: {"Content-Type": "application/json"},
       body: bodyEn
-      );
-      print("liked!");
+      ).then((value) => print("liked!"));
+      // print("liked!");
     }else if (_isLiked){
       final finurl = Uri.parse(url);
       final request = http.Request("DELETE", finurl);
       request.headers.addAll(<String, String>{"Content-Type": "application/json",});
       request.body = bodyEn;
-      request.send();
-      print("unliked!");
+      request.send().then((value) => print("unliked!"));
+      // print("unliked!");
     }
 
     setState(() {
@@ -63,15 +64,24 @@ class _SMPostInteractionsState extends State<SMPostInteractions> {
       http.post(url,
       headers: {"Content-Type": "application/json"},
       body: bodyEn
-      );
-      print("retweeted!");
+      ).then((value) {
+        print(utf8.decode(value.bodyBytes));
+        setState(() {
+          rtId = rtId=json.decode(utf8.decode(value.bodyBytes))["id"];
+        });
+        print("retweeted!");
+      });
+      // print("retweeted!");
     }else if (_isShared){
+      print(rtId);
+      Map rtid = {"id":rtId.toString()};
+      var bodyRtId = json.encode(rtid);
       final finurl = Uri.parse(url);
       final request = http.Request("DELETE", finurl);
       request.headers.addAll(<String, String>{"Content-Type": "application/json",});
-      request.body = bodyEn;
-      request.send();
-      print("unretweeted!");
+      request.body = bodyRtId;
+      request.send().then((value) => print("unretweeted!"));
+      // print("unretweeted!");
     }
 
     setState(() {
