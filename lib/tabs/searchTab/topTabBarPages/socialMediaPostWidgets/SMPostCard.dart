@@ -13,6 +13,7 @@ class SMPostCard extends StatelessWidget {
   final bool media;
   final List imageURLs;
   final String tweetId;
+  final bool verified;
 
   SMPostCard({
     this.imagePath,
@@ -22,7 +23,8 @@ class SMPostCard extends StatelessWidget {
     this.textPost,
     this.media,
     this.imageURLs,
-    this.tweetId
+    this.tweetId,
+    this.verified
   });
 
   void _onPostTap(context) {
@@ -57,6 +59,7 @@ class SMPostCard extends StatelessWidget {
           media: media,
           imageURLs: imageURLs,
           tweetId: tweetId,
+          verified: verified,
         ),
         width: MediaQuery.of(context).size.width,
         color: Colors.white54,

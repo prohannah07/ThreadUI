@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import './SMPostImageCarousel.dart';
 import './SMPostInteractions.dart';
 
-
 class SMPostDetails extends StatelessWidget {
   final String imagePath;
   final String name;
@@ -13,17 +12,18 @@ class SMPostDetails extends StatelessWidget {
   final bool media;
   final List imageURLs;
   final String tweetId;
+  final bool verified;
 
-  SMPostDetails({
-    this.imagePath,
-    this.name,
-    this.userName,
-    this.socialMedia,
-    this.textPost,
-    this.media,
-    this.imageURLs,
-    this.tweetId
-  });
+  SMPostDetails(
+      {this.imagePath,
+      this.name,
+      this.userName,
+      this.socialMedia,
+      this.textPost,
+      this.media,
+      this.imageURLs,
+      this.tweetId,
+      this.verified});
 
   Widget _getUserImage() {
     return Padding(
@@ -39,8 +39,8 @@ class SMPostDetails extends StatelessWidget {
   Widget _getUserName() {
     var nameLen = name.length;
     var finalName = name;
-    if (nameLen > 10){
-      finalName = name.substring(0,10) + "...";
+    if (nameLen > 10) {
+      finalName = name.substring(0, 10) + "...";
     }
     return Padding(
       padding: EdgeInsets.only(right: 2.0),
@@ -75,13 +75,39 @@ class SMPostDetails extends StatelessWidget {
   }
 
   Widget _getUserSocialMedia() {
-    return Image(
+    return Padding(
+      padding: EdgeInsets.only(left: 2),
+      child: Image(
         image: AssetImage(
           "assets/socialMediaIcons/" + socialMedia + ".png",
         ),
         height: 15.0,
         width: 15.0,
+        color: _chooseSMColor(),
+      ),
+    );
+  }
+
+  Widget _getUserVerified() {
+    return Image(
+        image: AssetImage(
+          "assets/verified_icons/verified_" + socialMedia + ".png",
+        ),
+        height: 15.0,
+        width: 15.0,
         color: _chooseSMColor());
+  }
+
+  Widget _buildSocialMediaIcons() {
+    if (verified) {
+      return Row(
+        children: <Widget>[
+          _getUserVerified(),
+          _getUserSocialMedia(),
+        ],
+      );
+    }
+    return _getUserSocialMedia();
   }
 
   Widget _getUserTextPost() {
@@ -108,7 +134,7 @@ class SMPostDetails extends StatelessWidget {
         child: Row(
           children: <Widget>[
             _getUserName(),
-            _getUserSocialMedia(),
+            _buildSocialMediaIcons(),
           ],
         ),
       );
@@ -119,7 +145,7 @@ class SMPostDetails extends StatelessWidget {
         children: <Widget>[
           _getUserName(),
           _getUserUsername(),
-          _getUserSocialMedia(),
+          _buildSocialMediaIcons(),
         ],
       ),
     );
@@ -132,7 +158,12 @@ class SMPostDetails extends StatelessWidget {
           _buildUserNames(),
           _getUserTextPost(),
           SMPostImageCarousel(imageURLs: imageURLs),
-          SMPostInteractions(socialMedia: socialMedia, like: false, share: false, tweedId: tweetId,)
+          SMPostInteractions(
+            socialMedia: socialMedia,
+            like: false,
+            share: false,
+            tweedId: tweetId,
+          )
         ],
         crossAxisAlignment: CrossAxisAlignment.start,
       );
@@ -141,7 +172,12 @@ class SMPostDetails extends StatelessWidget {
       children: <Widget>[
         _buildUserNames(),
         _getUserTextPost(),
-        SMPostInteractions(socialMedia: socialMedia, like: false, share: false, tweedId: tweetId,)
+        SMPostInteractions(
+          socialMedia: socialMedia,
+          like: false,
+          share: false,
+          tweedId: tweetId,
+        )
       ],
       crossAxisAlignment: CrossAxisAlignment.start,
     );

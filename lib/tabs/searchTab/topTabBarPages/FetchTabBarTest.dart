@@ -109,6 +109,7 @@ class _FetchTabBarTwitterState extends State<FetchTabBarTwitter> {
                       media: snapshot.data[i]["retweetedStatus"]==null ? (snapshot.data[i]["mediaEntities"].length==0 ? false : true) : (snapshot.data[i]["retweetedStatus"]["mediaEntities"].length==0 ? false : true),
                       imageURLs: _getMedia(snapshot.data[i]["retweetedStatus"]==null ? snapshot.data[i]["mediaEntities"]: snapshot.data[i]["retweetedStatus"]["mediaEntities"]),
                       tweetId: snapshot.data[i]["retweetedStatus"]==null ? snapshot.data[i]["id"].toString() : snapshot.data[i]["retweetedStatus"]["id"].toString(),
+                      verified: snapshot.data[i]["retweetedStatus"]==null ? snapshot.data[i]["user"]["verified"] : snapshot.data[i]["retweetedStatus"]["user"]["verified"],
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) =>
